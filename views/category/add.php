@@ -8,6 +8,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
+$this->title = 'Dodaj kategoriju';
 ?>
 
 
