@@ -36,9 +36,10 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Kategorije', 'url' => ['/category/index']]
-        ],
-    ]);
+            ['label' => 'Kategorije', 'url' => ['/category/index']],
+            ['label' => 'Vicevi', 'url' => ['/joke/index']],
+            
+    ]]);
     NavBar::end();
     ?>
 
