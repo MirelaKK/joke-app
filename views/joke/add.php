@@ -9,16 +9,20 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Dodaj kategoriju';
+$this->title = 'Dodaj vic';
 ?>
 
 
 
 <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($category, 'category',[
+    <?= $form->field($joke, 'title',[
     'template' => '{label} <div class="row"><div class="col-sm-4">{input}{error}{hint}</div></div>'
-])->label('Kategorija'); ?>
+])->label('Naziv vica'); ?>
+
+<?= $form->field($joke, 'text',[
+    'template' => '{label} <div class="row"><div class="col-sm-4">{input}{error}{hint}</div></div>'
+])->label('Text vica'); ?>
 
 
     <div class="form-group">

@@ -5,10 +5,9 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
-use app\models\Category;
 use app\models\Joke;
 
-class CategoryController extends Controller
+class JokeController extends Controller
 {
     
     public function actions()
@@ -29,21 +28,9 @@ class CategoryController extends Controller
     
     }
 
-    public function actionContact()
-    {
-        return $this->render('contact');
-    
-    }
-
-    public function actionSend()
-    {
-        return $this->render('send');
-    
-    }
-
 
     public function actionOverview(){
-        $query = Category::find();
+        $query = Joke::find();
         
         $provider = new ActiveDataProvider([
                     'query' => $query]);
@@ -56,36 +43,38 @@ class CategoryController extends Controller
 
         if(!empty(Yii::$app->request->get('id'))) {
 
-            $category = Category::findOne(Yii::$app->request->get('id'));
+            $joke = Joke::findOne(Yii::$app->request->get('id'));
         } else {
-            $category = new Category;
+            $joke = new Joke;
         }
 
 
         if (Yii::$app->request->isPost) { 
 
-            $values= \Yii::$app->request->post('Category');
+            $values= \Yii::$app->request->post('Joke');
 
-            $category -> attributes = $values;
-            $category ->save();
+            $joke -> attributes = $values;
+            $joke ->save();
                 
-            $this->redirect(['category/overview']); 
+            $this->redirect(['joke/overview']); 
             
         } else {
             // either the page is initially displayed or there is some validation error
-            return $this->render('add', ['category' => $category]);
+            return $this->render('add', ['joke' => $joke]);
         }
         
     }
 
     public function actionDelete() {
 
-        $category = Category::findOne(Yii::$app->request->get('id'));
-        $category ->delete();
+        $joke = joke::findOne(Yii::$app->request->get('id'));
+        $joke ->delete();
 
-        $this->redirect(['category/overview']); 
+        $this->redirect(['joke/overview']); 
 
     }
+
+    
     
 }
 
