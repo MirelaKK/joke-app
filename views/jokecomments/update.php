@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Category */
+/* @var $model app\models\JokeComments */
 
-$this->title = 'Update-uj Kategoriju: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Kategorije', 'url' => ['index']];
+$this->title = 'Updat-uj komentar na vic: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Komentari viceva', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="category-update">
+<div class="joke-comments-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
