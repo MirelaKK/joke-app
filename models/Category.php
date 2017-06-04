@@ -10,15 +10,16 @@ class Category extends ActiveRecord{
     public function rules()
     {
         return [
-            [['category'],'required']                    
+            [['category'],'required'],
+            [['sort_key'],'safe']
         ];
     }
     
     public static function tableName(){
-        return '{{kategorije}}';
+        return '{{category}}';
     }
 
     public function getJokes() {
-    return $this->hasMany(Joke::className(), ['id'=> 'vic_id' ])->viaTable('vicevi_kategorije', ['category_id' => 'id']);
+    return $this->hasMany(Joke::className(), ['id'=> 'joke_id' ])->viaTable('joke2category', ['category_id' => 'id']);
     }
 }
