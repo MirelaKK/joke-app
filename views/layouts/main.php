@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\bootstrap\Tabs;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -36,17 +37,29 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Kategorije', 'url' => ['/category/index']],
-            ['label' => 'Vicevi', 'url' => ['/joke/index']],
-            
-    ]]);
+            [
+                'label' => 'Login',
+                'url' => ['/admin/login']],
+            ],
+        ]);
     NavBar::end();
     ?>
-
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+       
+        <?= Nav::widget([
+            'options'=>['class'=>'nav-tabs'],
+            'items' => [
+                [
+                    'label' => 'Vicevi',
+                    'url' => ['joke/index'],
+                ],
+                [
+                    'label' => 'Kategorije',
+                    'url' => ['category/index'],
+                    ],
+                ],
+            ]);
+        ?>
         <?= $content ?>
     </div>
 </div>
