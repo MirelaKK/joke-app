@@ -45,7 +45,7 @@ class Joke extends \yii\db\ActiveRecord
             ['submit_date', 'default','value'=>function($model,$attributes){
                 return date('Y-m-d H:i:s');
             }],
-            [['submit_date', 'approval_date', 'joke_of_day_date'], 'safe'],
+            [['approval_date', 'joke_of_day_date'], 'safe'],
             [['status_id', 'admin_id'], 'integer'],
             [['rating'], 'number'],
             [['title', 'submitter'], 'string', 'max' => 50],
