@@ -34,9 +34,7 @@ class AppAsset extends AssetBundle
     		'assets/49ff8c7f/bloodhound.js',
                 'assets/49ff8c7f/typeahead.bundle.min,js',
                 'assets/49ff8c7f/typeahead.jquery.min.js',
-		'assets/68b36b0a/jquery.min.js',
 		'assets/4551d01/js/bootstrap.min.js',
-		'assets/a98ae72c',
 		'assets/ebdf6503/toolbar.js',
 		'assets/ebdf6503/timeline.js',
                 'assets/1918460d/js/bootstrap-datepicker.min.js'
