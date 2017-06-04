@@ -1,11 +1,33 @@
 <?php
 
-/* @var $this yii\web\View */
 use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\CategorySearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Kategorije';
+$this->title = 'Categories';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="category-index">
 
-  <?= Html::a('Pregled kategorija', ['/category/overview']) ?>
-<br>
-  <?= Html::a('Dodaj kategoriju', ['/category/update']) ?>
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Dodaj kategoriju', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+<?php Pjax::begin(); ?>    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'category',
+            'sort_key',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+<?php Pjax::end(); ?></div>
