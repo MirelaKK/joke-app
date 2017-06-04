@@ -36,7 +36,6 @@ class JokeRating extends \yii\db\ActiveRecord
                 return date('Y-m-d H:i:s');
             }],
             [['joke_id'], 'integer'],
-            [['date_of_rating'], 'safe'],
             [['joke_rating'], 'number'],
             [['ip'], 'ip'],
             [['joke_id'], 'exist', 'skipOnError' => true, 'targetClass' => Joke::className(), 'targetAttribute' => ['joke_id' => 'id']],
