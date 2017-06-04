@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\JokeStatus;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Joke */
@@ -22,7 +23,14 @@ use app\models\JokeStatus;
 
     <?= $form->field($model, 'admin_id')->textInput() ?>
 
-    <?= $form->field($model, 'joke_of_day_date')->textInput() ?>
+    <?= $form->field($model, 'joke_of_day_date')->widget(
+            DatePicker::className(), [
+                 'inline' => false, 
+                 'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);?> 
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
