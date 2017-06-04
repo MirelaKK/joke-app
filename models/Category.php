@@ -11,7 +11,17 @@ class Category extends ActiveRecord{
     {
         return [
             [['category'],'required'],
-            [['sort_key'],'safe']
+            [['category'],'string', 'max' => 50],
+            [['sort_key'],'safe'],
+            [['id','sort_key'],'integer'],
+        ];
+    }
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'category' => 'Kategorija',
+            'sort_key' => 'Sort',
         ];
     }
     

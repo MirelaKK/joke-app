@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Categories';
+$this->title = 'Admin';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Dodaj kategoriju', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Dodaj admina', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -24,8 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'category',
-            'sort_key',
+            'first_name',
+            'last_name',
+            'email',
+            'active',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -40,13 +40,23 @@ class Joke extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'joke', 'submitter'], 'required'],
+            [['title', 'joke'], 'required'],
             [['joke'], 'string'],
             ['submit_date', 'default','value'=>function($model,$attributes){
                 return date('Y-m-d H:i:s');
             }],
-            [['approval_date', 'joke_of_day_date'], 'safe'],
             [['status_id', 'admin_id'], 'integer'],
+            ['approval_date', 'default','value'=>function($model,$attributes){
+                return date('Y-m-d H:i:s');
+            },'when' => function ($model) {
+                return $model->status_id == 2;
+            }],
+            ['submitter','default','value'=>function($model,$attributes){
+                $f_name = $model->admin->first_name;
+                $l_name = $model->admin->last_name;
+                 return $f_name." ".$l_name;
+            }],
+            [['approval_date', 'joke_of_day_date'], 'safe'],
             [['rating'], 'number'],
             [['title', 'submitter'], 'string', 'max' => 50],
             [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['admin_id' => 'id']],
