@@ -3,81 +3,119 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\Controller;
-use yii\data\ActiveDataProvider;
 use app\models\Joke;
+use app\models\JokeSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 class JokeController extends Controller
 {
-    
-    public function actions()
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ]
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
         ];
     }
 
     /**
-     * @return string
+     * Lists all Joke models.
+     * @return mixed
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    
+        $searchModel = new JokeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
-
-    public function actionOverview(){
-        $query = Joke::find();
-        
-        $provider = new ActiveDataProvider([
-                    'query' => $query]);
-
-        return $this -> render('overview',
-                            ['dataProvider' => $provider]);
+    /**
+     * Displays a single Joke model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
-    public function actionUpdate() {
+    /**
+     * Creates a new Joke model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Joke();
 
-        if(!empty(Yii::$app->request->get('id'))) {
-
-            $joke = Joke::findOne(Yii::$app->request->get('id'));
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $joke = new Joke;
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
+    }
 
+    /**
+     * Updates an existing Joke model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
 
-        if (Yii::$app->request->isPost) { 
-
-            $values= \Yii::$app->request->post('Joke');
-
-            $joke -> attributes = $values;
-            $joke ->save();
-                
-            $this->redirect(['joke/overview']); 
-            
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            // either the page is initially displayed or there is some validation error
-            return $this->render('add', ['joke' => $joke]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-        
     }
 
-    public function actionDelete() {
+    /**
+     * Deletes an existing Joke model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
 
-        $joke = joke::findOne(Yii::$app->request->get('id'));
-        $joke ->delete();
-
-        $this->redirect(['joke/overview']); 
-
+        return $this->redirect(['index']);
     }
 
-    
-    
+    /**
+     * Finds the Joke model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Joke the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Joke::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }
-
-
-
-
