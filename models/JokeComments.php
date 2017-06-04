@@ -32,10 +32,9 @@ class JokeComments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['submitter_name', 'joke_comment', 'submit_date', 'active'], 'required'],
+            [['submitter_name', 'joke_comment', 'active'], 'required'],
             [['active'], 'integer'],
             [['joke_comment'], 'string'],
-            [['submit_date'], 'safe'],
             ['submit_date', 'default','value'=>function($model,$attributes){
                 return date('Y-m-d H:i:s');
             }],
