@@ -69,6 +69,10 @@ AppAsset::register($this);
                 [
                     'label' => 'Ocjene',
                     'url' => ['jokerating/index'],
+                ],
+                [
+                    'label' => 'Statusi',
+                    'url' => ['jokestatus/index'],
                 ],]
                 
             ]);
