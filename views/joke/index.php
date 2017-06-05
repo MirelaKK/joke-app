@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'approval_date',
             'admin_id',
             'joke_of_day_date',
-            'rating',
+            'joke_rating',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

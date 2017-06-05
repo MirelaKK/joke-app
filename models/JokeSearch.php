@@ -18,9 +18,8 @@ class JokeSearch extends Joke
     public function rules()
     {
         return [
-            [['id', 'status_id', 'admin_id'], 'integer'],
+            [['id', 'status_id', 'admin_id', 'joke_rating'], 'integer'],
             [['title', 'joke', 'submit_date', 'submitter', 'approval_date', 'joke_of_day_date'], 'safe'],
-            [['rating'], 'number'],
         ];
     }
 
@@ -64,7 +63,7 @@ class JokeSearch extends Joke
             'approval_date' => $this->approval_date,
             'admin_id' => $this->admin_id,
             'joke_of_day_date' => $this->joke_of_day_date,
-            'rating' => $this->rating,
+            'joke_rating' => $this->joke_rating,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
