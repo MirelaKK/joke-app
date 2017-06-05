@@ -24,7 +24,7 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'joke')->textarea(['rows' => 6]) ?>
     <br><br><br><br><br>
-    <?= $form->field($model, 'status_id')->dropDownList(ArrayHelper::map(JokeStatus::find()->all(),'id','status'),['prompt'=>'Izaberi status']) ?>
+    <?= $form->field($model, 'joke_status_id')->dropDownList(ArrayHelper::map(JokeStatus::find()->all(),'id','status'),['prompt'=>'Izaberi status']) ?>
 
     <?= $form->field($model, 'admin_id')->dropDownList(ArrayHelper::map(Admin::find()->all(),'id','id'),['prompt'=>'Izaberi ID'])  ?>
 
