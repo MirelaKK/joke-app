@@ -61,7 +61,7 @@ class Joke extends \yii\db\ActiveRecord
             [['title', 'submitter'], 'string', 'max' => 50],
             [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['admin_id' => 'id']],
             ['joke_status_id', 'default','value'=>1],
-            [['joke_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => JokeStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            [['joke_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => JokeStatus::className(), 'targetAttribute' => ['joke_status_id' => 'id']],
         ];
     }
 
