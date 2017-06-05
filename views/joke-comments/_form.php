@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'joke_id')->textInput() ?>
 
-    <?= $form->field($model, 'submitter_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'submitter')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'joke_comment')->textarea(['rows' => 6]) ?>
 

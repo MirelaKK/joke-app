@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property integer $joke_id
- * @property string $submitter_name
+ * @property string $submitter
  * @property string $joke_comment
  * @property string $submit_date
  * @property integer $active
@@ -32,13 +32,13 @@ class JokeComments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['submitter_name', 'joke_comment', 'active'], 'required'],
+            [['submitter', 'joke_comment', 'active'], 'required'],
             [['active'], 'integer'],
             [['joke_comment'], 'string'],
             ['submit_date', 'default','value'=>function($model,$attributes){
                 return date('Y-m-d H:i:s');
             }],
-            [['submitter_name'], 'string', 'max' => 50],
+            [['submitter'], 'string', 'max' => 50],
             [['joke_id'], 'exist', 'skipOnError' => true, 'targetClass' => Joke::className(), 'targetAttribute' => ['joke_id' => 'id']],
         ];
     }
@@ -51,7 +51,7 @@ class JokeComments extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'joke_id' => 'ID vica',
-            'submitter_name' => 'Poslao/Poslala',
+            'submitter' => 'Poslao/Poslala',
             'joke_comment' => 'Komentar na vic',
             'submit_date' => 'Datum slanja',
             'active' => 'Aktivan/Aktivna',

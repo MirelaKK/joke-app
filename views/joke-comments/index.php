@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'joke_id',
-            'submitter_name',
+            'submitter',
             'joke_comment:ntext',
             'submit_date',
             'active',

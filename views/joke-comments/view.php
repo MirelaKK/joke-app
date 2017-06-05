@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'joke_id',
-            'submitter_name',
+            'submitter',
             'joke_comment:ntext',
             'submit_date',
             'active',
