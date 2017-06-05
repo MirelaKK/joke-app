@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\JokeStatus;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\JokeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,18 +20,24 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'title',
             'joke:ntext',
             'submit_date',
             'submitter',
-            'status_id',
+            ['label'=> 'Status',
+             'attribute' => 'joke_status_id',
+             'value' => function($searchModel) {
+                        return $searchModel->status->status;
+            }],
             'approval_date',
-            'admin_id',
+            ['label'=> 'Admin',
+             'attribute' => 'admin_id',
+             'value' => function($searchModel) {
+                        return $searchModel->admin->first_name." ".$searchModel->admin->last_name;
+            }],
             'joke_of_day_date',
             'joke_rating',
 
