@@ -10,7 +10,11 @@ use yii\widgets\ActiveForm;
 
 <div class="admin-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['fieldConfig' => [
+            'template' => "{label}<div class=\"col-md-3\">{input}</div><div class=\"col-md-3\">{hint}</div><div class=\"col-md-3\">{error}</div><br><br>",
+            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+            ],
+        ]); ?>
 
     <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
 
