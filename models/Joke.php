@@ -12,7 +12,7 @@ use Yii;
  * @property string $joke
  * @property string $submit_date
  * @property string $submitter
- * @property integer $status_id
+ * @property integer $joke_status_id
  * @property string $approval_date
  * @property integer $admin_id
  * @property string $joke_of_day_date
@@ -45,11 +45,11 @@ class Joke extends \yii\db\ActiveRecord
             ['submit_date', 'default','value'=>function($model,$attributes){
                 return date('Y-m-d H:i:s');
             }],
-            [['status_id', 'admin_id'], 'integer'],
+            [['joke_status_id', 'admin_id'], 'integer'],
             ['approval_date', 'default','value'=>function($model,$attributes){
                 return date('Y-m-d H:i:s');
             },'when' => function ($model) {
-                return $model->status_id == 2;
+                return $model->joke_status_id == 2;
             }],
             ['submitter','default','value'=>function($model,$attributes){
                 $f_name = $model->admin->first_name;
@@ -60,8 +60,8 @@ class Joke extends \yii\db\ActiveRecord
             [['joke_rating'], 'number'],
             [['title', 'submitter'], 'string', 'max' => 50],
             [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['admin_id' => 'id']],
-            ['status_id', 'default','value'=>1],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => JokeStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
+            ['joke_status_id', 'default','value'=>1],
+            [['joke_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => JokeStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
 
@@ -76,9 +76,9 @@ class Joke extends \yii\db\ActiveRecord
             'joke' => 'Tekst',
             'submit_date' => 'Datum slanja',
             'submitter' => 'Poslao/Poslala',
-            'status_id' => 'Status ID',
+            'joke_status_id' => 'Status vica',
             'approval_date' => 'Datum odobrenja',
-            'admin_id' => 'Admin ID',
+            'admin_id' => 'Admin',
             'joke_of_day_date' => 'Datum za vic dana',
             'joke_rating' => 'Rating',
         ];
@@ -97,7 +97,7 @@ class Joke extends \yii\db\ActiveRecord
      */
     public function getStatus()
     {
-        return $this->hasOne(JokeStatus::className(), ['id' => 'status_id']);
+        return $this->hasOne(JokeStatus::className(), ['id' => 'joke_status_id']);
     }
 
     /**
