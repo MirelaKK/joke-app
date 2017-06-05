@@ -57,7 +57,7 @@ class Joke extends \yii\db\ActiveRecord
                  return $f_name." ".$l_name;
             }],
             [['approval_date', 'joke_of_day_date'], 'safe'],
-            [['rating'], 'number'],
+            [['joke_rating'], 'number'],
             [['title', 'submitter'], 'string', 'max' => 50],
             [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['admin_id' => 'id']],
             ['status_id', 'default','value'=>1],
@@ -80,7 +80,7 @@ class Joke extends \yii\db\ActiveRecord
             'approval_date' => 'Datum odobrenja',
             'admin_id' => 'Admin ID',
             'joke_of_day_date' => 'Datum za vic dana',
-            'rating' => 'Rating',
+            'joke_rating' => 'Rating',
         ];
     }
 

@@ -19,7 +19,7 @@ class JokeCommentsSearch extends JokeComments
     {
         return [
             [['id', 'joke_id', 'active'], 'integer'],
-            [['submitter_name', 'joke_comment', 'submit_date'], 'safe'],
+            [['submitter', 'joke_comment', 'submit_date'], 'safe'],
         ];
     }
 
@@ -65,7 +65,7 @@ class JokeCommentsSearch extends JokeComments
             'active' => $this->active,
         ]);
 
-        $query->andFilterWhere(['like', 'submitter_name', $this->submitter_name])
+        $query->andFilterWhere(['like', 'submitter', $this->submitter])
             ->andFilterWhere(['like', 'joke_comment', $this->joke_comment]);
 
         return $dataProvider;
