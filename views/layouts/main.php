@@ -58,11 +58,6 @@ AppAsset::register($this);
                     'url' => ['category/index'],
                 ],
                 [
-                    'label' => 'Admini',
-                    'url' => ['admin/overview'],
-                ],
-
-                [
                     'label' => 'Komentari',
                     'url' => ['joke-comments/index'],
                 ],
@@ -73,7 +68,12 @@ AppAsset::register($this);
                 [
                     'label' => 'Statusi',
                     'url' => ['joke-status/index'],
-                ],]
+                ],
+                [
+                    'label' => 'Admini',
+                    'url' => ['admin/overview'],
+                ],
+]
                 
             ]);
         ?>
