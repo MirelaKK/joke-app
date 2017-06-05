@@ -64,15 +64,15 @@ AppAsset::register($this);
 
                 [
                     'label' => 'Komentari',
-                    'url' => ['jokecomments/index'],
+                    'url' => ['joke-comments/index'],
                 ],
                 [
                     'label' => 'Ocjene',
-                    'url' => ['jokerating/index'],
+                    'url' => ['joke-rating/index'],
                 ],
                 [
                     'label' => 'Statusi',
-                    'url' => ['jokestatus/index'],
+                    'url' => ['joke-status/index'],
                 ],]
                 
             ]);
