@@ -56,12 +56,25 @@ AppAsset::register($this);
                 [
                     'label' => 'Kategorije',
                     'url' => ['category/index'],
-                    ],
+                ],
                 [
                     'label' => 'Admini',
                     'url' => ['admin/overview'],
-                    ],
                 ],
+
+                [
+                    'label' => 'Komentari',
+                    'url' => ['jokecomments/index'],
+                ],
+                [
+                    'label' => 'Ocjene',
+                    'url' => ['jokerating/index'],
+                ],
+                [
+                    'label' => 'Statusi',
+                    'url' => ['jokestatus/index'],
+                ],]
+                
             ]);
         ?>
         <?= $content ?>

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Joke */
+/* @var $model app\models\JokeRating */
 
-$this->title = 'Dodaj vic';
-$this->params['breadcrumbs'][] = ['label' => 'Vicevi', 'url' => ['index']];
+$this->title = 'Dodaj ocjenu';
+$this->params['breadcrumbs'][] = ['label' => 'Ocjena vica', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="joke-create">
+<div class="joke-rating-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
