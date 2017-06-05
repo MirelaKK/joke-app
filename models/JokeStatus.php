@@ -49,6 +49,6 @@ class JokeStatus extends \yii\db\ActiveRecord
      */
     public function getJokes()
     {
-        return $this->hasMany(Joke::className(), ['status_id' => 'id']);
+        return $this->hasMany(Joke::className(), ['joke_status_id' => 'id']);
     }
 }
