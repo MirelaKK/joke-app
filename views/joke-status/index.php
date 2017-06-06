@@ -20,13 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'summary' => '',
+        'tableOptions'=>['style' => 'width:500px','style' => 'height:250px','class' => 'table-bordered'],
         'columns' => [
             ['attribute'=>'id',
             'contentOptions' => array('style' => 'width: 50px;')],
             'status',
             
-            ['class' => 'yii\grid\ActionColumn',
-              'template' => '{update}{delete}'],
-        ],
+            ['header'=>'Akcija',
+             'class' => 'yii\grid\ActionColumn',
+             'template' => '{update}{delete}'],
+            ],
     ]); ?>
 <?php Pjax::end(); ?></div>

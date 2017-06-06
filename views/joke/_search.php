@@ -5,8 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\JokeStatus;
 use app\models\Admin;
+use app\models\Category;
 use dosamigos\datepicker\DatePicker;
-use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\JokeRatingSearch */
@@ -29,6 +29,9 @@ use dosamigos\datetimepicker\DateTimePicker;
 
     <?= $form->field($model, 'joke') ?>
 
+    <?= $form->field($model, 'category_ids')-> checkboxList(Category::getAvailableCategories())->label('Kategorije')?>
+    <br><br><br>
+    
     <?= $form->field($model, 'submit_date')->widget(
             DatePicker::className(), [
                 'language' => 'bs',

@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'summary' => '',
         'columns' => [
 
             'id',
@@ -58,7 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'joke_of_day_date',
             'joke_rating',
 
-            ['class' => 'yii\grid\ActionColumn',
+            ['header'=>'Akcija',
+             'class' => 'yii\grid\ActionColumn',
             'buttons'=> [
             'comment' => function($url, $model) {return Html::a('<span class="glyphicon glyphicon-comment"></span>', $url); }
             ],

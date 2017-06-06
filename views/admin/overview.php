@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'summary' => '',
         'columns' => [
 
             ['attribute'=>'id',
@@ -31,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
              ['attribute'=>'active',
             'contentOptions' => array('style' => 'width: 100px;')],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['header'=>'Akcija',
+             'class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

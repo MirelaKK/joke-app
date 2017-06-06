@@ -21,14 +21,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions'=>['style' => 'width:500px','style' => 'height:400px','class' => 'table-bordered'],
+        'summary' => '',
         'columns' => [
 
             'id',
             'category',
             'sort_key',
 
-            ['class' => 'yii\grid\ActionColumn',
-              'template' => '{update}{delete}'],
+            ['header'=>'Akcija',
+             'class' => 'yii\grid\ActionColumn',
+             'template' => '{update}{delete}'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
