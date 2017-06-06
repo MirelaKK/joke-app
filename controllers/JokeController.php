@@ -4,8 +4,11 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Joke;
+use app\models\Category;
 use app\models\JokeSearch;
+use app\models\JokeWithCategory;
 use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -61,15 +64,18 @@ class JokeController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Joke();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $model = new JokeWithCategory();
+ 
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                $model->saveCategories();
+                return $this->redirect(['index']);
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -80,15 +86,19 @@ class JokeController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = JokeWithCategory::findOne($id);
+        $model->loadCategories();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                $model->saveCategories();
+                return $this->redirect(['index']);
+            }
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
