@@ -38,9 +38,15 @@ class JokeCommentsController extends Controller
         $searchModel = new JokeCommentsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        if(Yii::$app->request->get('joke_id')){
+            $joke_id= Yii::$app->request->get('joke_id');
+            $dataProvider=$searchModel->search(['joke_id'=>$joke_id]);
+        }
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'view' => '',
         ]);
     }
 
