@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\JokeStatus;
 use app\models\Admin;
+use app\models\Category;
 use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
@@ -24,6 +25,8 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'joke')->textarea(['rows' => 6]) ?>
     <br><br><br><br><br>
+    <?= $form->field($model, 'categories[]')-> checkboxList(ArrayHelper::map(Category::find()->all(),'id','category'))->label('Kategorije')?>
+    <br><br><br>
     <?= $form->field($model, 'joke_status_id')->dropDownList(ArrayHelper::map(JokeStatus::find()->all(),'id','status'),['prompt'=>'Izaberi status']) ?>
 
     <?= $form->field($model, 'admin_id')->dropDownList(ArrayHelper::map(Admin::find()->all(),'id','id'),['prompt'=>'Izaberi ID'])  ?>
