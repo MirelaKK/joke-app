@@ -14,9 +14,10 @@ use Yii;
  * @property string $submitter
  * @property integer $joke_status_id
  * @property string $approval_date
+ * @property string $publish_date
  * @property integer $admin_id
  * @property string $joke_of_day_date
- * @property double $rating
+ * @property double $joke_rating
  *
  * @property Admin $admin
  * @property JokeStatus $status
@@ -56,7 +57,7 @@ class Joke extends \yii\db\ActiveRecord
                 $l_name = $model->admin->last_name;
                  return $f_name." ".$l_name;
             }],
-            [['approval_date', 'joke_of_day_date'], 'safe'],
+            [['approval_date', 'joke_of_day_date','publish_date'], 'safe'],
             [['joke_rating'], 'number'],
             [['title', 'submitter'], 'string', 'max' => 50],
             [['admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['admin_id' => 'id']],
@@ -78,6 +79,7 @@ class Joke extends \yii\db\ActiveRecord
             'submitter' => 'Poslao/Poslala',
             'joke_status_id' => 'Status vica',
             'approval_date' => 'Datum odobrenja',
+            'publish_date' => 'Datum odbjavljivanja',
             'admin_id' => 'Admin',
             'joke_of_day_date' => 'Datum za vic dana',
             'joke_rating' => 'Rating',
