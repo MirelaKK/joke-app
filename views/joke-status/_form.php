@@ -10,7 +10,10 @@ use yii\widgets\ActiveForm;
 
 <div class="joke-status-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['fieldConfig' => [
+            'template' => "{label}<div class=\"col-md-3\">{input}</div><div class=\"col-md-3\">{error}</div><br><br>",
+            'labelOptions' => ['class' => 'col-md-1 control-label'],
+            ],]); ?>
 
     <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
 
