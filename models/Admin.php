@@ -16,7 +16,7 @@ use Yii;
  *
  * @property Joke[] $jokes
  */
-class Admin extends \yii\db\ActiveRecord
+class Admin extends \yii\db\ActiveRecord 
 {
     /**
      * @inheritdoc
@@ -51,7 +51,7 @@ class Admin extends \yii\db\ActiveRecord
             'last_name' => 'Prezime',
             'email' => 'Email',
             'password' => 'Password',
-            'active' => 'Aktivan/Aktivna',
+            'active' => 'Aktivan',
         ];
     }
 

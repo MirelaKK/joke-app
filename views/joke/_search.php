@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\models\JokeStatus;
 use app\models\Admin;
 use dosamigos\datepicker\DatePicker;
+use dosamigos\datetimepicker\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\JokeRatingSearch */
@@ -30,10 +31,11 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'submit_date')->widget(
             DatePicker::className(), [
+                'language' => 'bs',
                  'inline' => false, 
                  'clientOptions' => [
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd H:i:s'
+                    'format' => 'yyyy-mm-dd'
                 ]
             ]) ?>
 
@@ -43,10 +45,20 @@ use dosamigos\datepicker\DatePicker;
     
     <?= $form->field($model, 'approval_date')->widget(
             DatePicker::className(), [
+                'language' => 'bs',
                  'inline' => false, 
                  'clientOptions' => [
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd H:i:s'
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ])?>
+    
+        <?= $form->field($model, 'publish_date')->widget(
+            DatePicker::className(), [
+                 'inline' => false, 
+                 'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
                 ]
             ])?>
     
@@ -54,6 +66,7 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'joke_of_day_date')->widget(
             DatePicker::className(), [
+                'language' => 'bs',
                  'inline' => false, 
                  'clientOptions' => [
                     'autoclose' => true,

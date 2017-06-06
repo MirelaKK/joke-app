@@ -12,9 +12,7 @@ use app\models\Joke;
  */
 class JokeSearch extends Joke
 {
-    /**
-     * @inheritdoc
-     */
+
     public function rules()
     {
         return [
@@ -23,9 +21,6 @@ class JokeSearch extends Joke
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -50,25 +45,24 @@ class JokeSearch extends Joke
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'submit_date' => $this->submit_date,
             'joke_status_id' => $this->joke_status_id,
-            'approval_date' => $this->approval_date,
             'admin_id' => $this->admin_id,
-            'joke_of_day_date' => $this->joke_of_day_date,
             'joke_rating' => $this->joke_rating,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'joke', $this->joke])
-            ->andFilterWhere(['like', 'submitter', $this->submitter]);
+            ->andFilterWhere(['like', 'submitter', $this->submitter])
+            ->andFilterWhere(['like', 'approval_date', $this->approval_date])
+            ->andFilterWhere(['like', 'submit_date', $this->submit_date])
+            ->andFilterWhere(['like', 'publish_date', $this->publish_date])
+            ->andFilterWhere(['like', 'joke_of_day_date', $this->joke_of_day_date]);
 
         return $dataProvider;
     }

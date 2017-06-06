@@ -76,7 +76,7 @@ class Joke extends \yii\db\ActiveRecord
             'title' => 'Naziv',
             'joke' => 'Tekst',
             'submit_date' => 'Datum slanja',
-            'submitter' => 'Poslao/Poslala',
+            'submitter' => 'Poslao',
             'joke_status_id' => 'Status vica',
             'approval_date' => 'Datum odobrenja',
             'publish_date' => 'Datum odbjavljivanja',
