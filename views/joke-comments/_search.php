@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'submit_date') ?>
 
-    <?php echo $form->field($model, 'active')->dropDownList([1,2],['prompt'=>'Izaberi status']) ?> ?>
+    <?php echo $form->field($model, 'active')->dropDownList([0=>'Ne',1=>'Da'],['prompt'=>'']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Traži', ['class' => 'btn btn-primary']) ?>
