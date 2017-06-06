@@ -29,8 +29,8 @@ class JokeCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['joke_id', 'category_id'], 'required'],
-            [['joke_id', 'category_id'], 'integer'],
+            [['joke_id', 'category_id'], 'required','message'=>'Polje ne može biti prazno'],
+            [['joke_id', 'category_id'], 'integer','message'=>'Polje može da sadrži samo cijele brojeve'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['joke_id'], 'exist', 'skipOnError' => true, 'targetClass' => Joke::className(), 'targetAttribute' => ['joke_id' => 'id']],
         ];

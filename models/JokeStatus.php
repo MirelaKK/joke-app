@@ -28,7 +28,7 @@ class JokeStatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'required'],
+            [['status'], 'required','message'=>'Polje ne može biti prazno'],
             [['status'], 'string', 'max' => 15],
         ];
     }

@@ -32,7 +32,7 @@ class Admin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'email', 'password', 'active'], 'required'],
+            [['first_name', 'last_name', 'email', 'password', 'active'], 'required','message'=>'Polje ne može biti prazno'],
             [['active'], 'integer'],
             [['first_name', 'last_name'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],
