@@ -34,10 +34,11 @@ class JokeController extends Controller
     {
         $searchModel = new JokeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'view'=>'',
         ]);
     }
 
@@ -109,6 +110,21 @@ class JokeController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->redirect(['joke-comments/index', 'searchModel'=>$searchModel, 'dataProvider' => $dataProvider]);
 
+    }
+    /*
+     * Renders partialy _search view in index
+     * @return mixed
+     */
+    public function actionSearch(){
+        $searchModel = new JokeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $view = $this->renderPartial('_search',['model'=>$searchModel]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'view'=>$view,
+        ]);
     }
     /**
      * Finds the Joke model based on its primary key value.
