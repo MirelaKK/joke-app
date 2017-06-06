@@ -24,12 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            ['attribute'=>'id',
+            'contentOptions' => array('style' => 'width: 50px;')],
             'status',
+            
 
             ['class' => 'yii\grid\ActionColumn'],
-            ['htmlOptions' => array('style' => 'width: 30px;'),
-            'filterHtmlOptions' => array('style' => 'width: 30px;');],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
