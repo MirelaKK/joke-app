@@ -106,6 +106,18 @@ class JokeRatingController extends Controller
         return $this->redirect(['index']);
     }
 
+     public function actionSearch(){
+        $searchModel = new JokeRatingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $view = $this->renderPartial('_search',['model'=>$searchModel]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'view'=>$view,
+        ]);
+    }
+
     /**
      * Finds the JokeRating model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

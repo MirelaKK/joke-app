@@ -13,6 +13,10 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'fieldConfig' => [
+            'template' => "{label}<div class=\"col-md-3\">{input}</div><div class=\"col-md-3\">{error}</div><br><br>",
+            'labelOptions' => ['class' => 'col-md-1 control-label'],
+            ],
     ]); ?>
 
     <?= $form->field($model, 'id') ?>
@@ -25,11 +29,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'submit_date') ?>
 
-    <?php echo $form->field($model, 'active') ?>
+    <?php echo $form->field($model, 'active')->dropDownList([1,2],['prompt'=>'Izaberi status']) ?> ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Traži', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Resetuj', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

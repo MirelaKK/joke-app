@@ -13,11 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="joke-rating-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <br>
+        <?= Html::a('Pretraga', ['joke-rating/search'], ['class' => 'btn btn-default']) ?>
+        <?= $view ?>
 
-    <p>
-        <?= Html::a('Dodaj ocjenu vica', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

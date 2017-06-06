@@ -28,6 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
 
             ['class' => 'yii\grid\ActionColumn'],
+            ['htmlOptions' => array('style' => 'width: 30px;'),
+            'filterHtmlOptions' => array('style' => 'width: 30px;');],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
