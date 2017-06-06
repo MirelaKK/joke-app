@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use app\models\JokeStatus;
+use yii\web\UrlManager;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\JokeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -41,7 +42,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'joke_of_day_date',
             'joke_rating',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+            'buttons'=> [
+            'comment' => function($url, $model) {return Html::a('<span class="glyphicon glyphicon-comment"></span>', $url); }
+            ],
+            'template' => '{comment}{update}{delete}',
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
+
+
+
