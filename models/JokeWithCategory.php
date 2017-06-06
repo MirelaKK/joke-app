@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use app\models\JokeCategory;
 
 /**
  * This is the model class for table "joke".
@@ -33,7 +35,7 @@ class JokeWithCategory extends Joke
     /**
      * @var array IDs of the categories
      */
-    $category_ids = [];
+    public $category_ids = [];
  
     /**
      * @return array the validation rules.
@@ -41,10 +43,11 @@ class JokeWithCategory extends Joke
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(), [
-            // each category_id must exist in category table (*1)
+            ['category_ids', 'required','message' => 'Morate izabrati barem jednu kategoriju.'],
+            // each category_id must exist in category table 
             ['category_ids', 'each', 'rule' => [
                     'exist', 'targetClass' => Category::className(), 'targetAttribute' => 'id'
-                ]
+                ],
             ],
         ]);
     }
@@ -55,7 +58,7 @@ class JokeWithCategory extends Joke
     public function attributeLabels()
     {
         return ArrayHelper::merge(parent::attributeLabels(), [
-            'category_ids' => 'Categories',
+            'category_ids' => 'Kategorije',
         ]);
     }
  
@@ -78,21 +81,20 @@ class JokeWithCategory extends Joke
     }
  
     /**
-     * save the post's categories (*3)
+     * save the post's categories 
      */
     public function saveCategories()
     {
-        /* clear the categories of the post before saving */
-        JokeCategory::deleteAll(['post_id' => $this->id]);
+        /* clear the categories of the joke before saving */
+        JokeCategory::deleteAll(['joke_id' => $this->id]);
         if (is_array($this->category_ids)) {
             foreach($this->category_ids as $category_id) {
                 $jc = new JokeCategory();
-                $jc->post_id = $this->post_id;
+                $jc->joke_id = $this->id;
                 $jc->category_id = $category_id;
                 $jc->save();
             }
         }
-        /* Be careful, $this->category_ids can be empty */
     }
 }
     
