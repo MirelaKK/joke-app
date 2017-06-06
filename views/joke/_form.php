@@ -25,7 +25,7 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'joke')->textarea(['rows' => 6]) ?>
     <br><br><br><br><br>
-    <?= $form->field($model, 'categories[]')-> checkboxList(ArrayHelper::map(Category::find()->all(),'id','category'))->label('Kategorije')?>
+    <?= $form->field($model, 'category_ids')-> checkboxList(Category::getAvailableCategories())->label('Kategorije')?>
     <br><br><br>
     <?= $form->field($model, 'joke_status_id')->dropDownList(ArrayHelper::map(JokeStatus::find()->all(),'id','status'),['prompt'=>'Izaberi status']) ?>
 
