@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'active')->dropDownList([1,2],['prompt'=>'Izaberi status']) ?>
+    <?= $form->field($model, 'active')->dropDownList([0=>'Aktivan',1=>'Nije aktivan'],['prompt'=>'Izaberi status']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Dodaj' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

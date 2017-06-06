@@ -15,22 +15,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <br>
         <?= Html::a('Pretraga', ['joke-rating/search'], ['class' => 'btn btn-default']) ?>
+    <br>
         <?= $view ?>
-
+    <br>
+    <br>
     
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'joke_id',
-            'date_of_rating',
-            'ip',
-            'joke_rating',
+            ['attribute'=>'id',
+            'headerOptions' => ['style' => 'width:10%'],
+             ],
+            ['attribute'=>'joke_id',
+            'headerOptions' => ['style' => 'width:10%'],
+             ],
+            ['attribute'=>'date_of_rating',
+            'headerOptions' => ['style' => 'width:20%'],
+             ],
+            ['attribute'=>'ip',
+            'headerOptions' => ['style' => 'width:30%'],
+             ],
+            ['attribute'=>'joke_rating',
+            'headerOptions' => ['style' => 'width:10%'],
+             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

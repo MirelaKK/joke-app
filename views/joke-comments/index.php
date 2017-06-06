@@ -25,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'joke_id',
@@ -34,7 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'submit_date',
             'active',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+              'template' => '{delete}'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

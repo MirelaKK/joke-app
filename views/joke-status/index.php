@@ -13,23 +13,20 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="joke-status-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Dodaj status vica', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <br>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             ['attribute'=>'id',
             'contentOptions' => array('style' => 'width: 50px;')],
             'status',
             
-
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+              'template' => '{update}{delete}'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
