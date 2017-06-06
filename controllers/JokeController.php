@@ -103,6 +103,12 @@ class JokeController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionComment($id)
+    {
+        $model = $this->findModel($id);
+        return $this->redirect(['joke-comments/view', 'model'=>$model, 'id' => $model->id]);
+
+    }
     /**
      * Finds the Joke model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
