@@ -13,7 +13,7 @@ use dosamigos\datetimepicker\DateTimePicker;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="joke-rating-search">
+<div class="joke-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
