@@ -105,8 +105,9 @@ class JokeController extends Controller
 
     public function actionComment($id)
     {
-        $model = $this->findModel($id);
-        return $this->redirect(['joke-comments/view', 'model'=>$model, 'id' => $model->id]);
+        $searchModel = new JokeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->redirect(['joke-comments/index', 'searchModel'=>$searchModel, 'dataProvider' => $dataProvider]);
 
     }
     /**
