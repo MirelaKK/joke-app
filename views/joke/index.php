@@ -15,13 +15,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="joke-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <br>
     <p>
         <?= Html::a('Dodaj vic', ['create'], ['class' => 'btn btn-success']) ?>
-        <br>
-        <br>
+        
         <?= Html::a('Pretraga', ['joke/search'], ['class' => 'btn btn-default']) ?>
+        <br>
         <?= $view ?>
+        <br>
+        <br>
         
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([

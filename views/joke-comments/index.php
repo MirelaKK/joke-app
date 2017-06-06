@@ -13,12 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="joke-comments-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <br>
     <p>
        
-        <?= Html::a('Pretraga', ['joke-comments/search'], ['class' => 'btn btn-default']) ?>
-        <?= $view ?>
-        
+    <?= Html::a('Pretraga', ['joke-comments/search'], ['class' => 'btn btn-default']) ?>
+    <br>
+     <?= $view ?>
+    <br>
+    <br>   
     </p>
     
 <?php Pjax::begin(); ?>    <?= GridView::widget([

@@ -13,10 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="category-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <br>
     <p>
         <?= Html::a('Dodaj admina', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <br>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

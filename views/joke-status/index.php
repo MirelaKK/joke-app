@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="joke-status-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <br>
     <p>
         <?= Html::a('Dodaj status vica', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
