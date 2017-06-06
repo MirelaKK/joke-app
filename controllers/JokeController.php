@@ -6,6 +6,7 @@ use Yii;
 use app\models\Joke;
 use app\models\Category;
 use app\models\JokeSearch;
+use app\models\JokeCommentsSearch;
 use app\models\JokeWithCategory;
 use yii\web\Controller;
 use yii\helpers\ArrayHelper;
@@ -116,8 +117,8 @@ class JokeController extends Controller
 
     public function actionComment($id)
     {
-        $searchModel = new JokeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new JokeCommentsSearch();
+        $dataProvider = $searchModel->search('id'==$id);
         return $this->redirect(['joke-comments/index', 'searchModel'=>$searchModel, 'dataProvider' => $dataProvider]);
 
     }
