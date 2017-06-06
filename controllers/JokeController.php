@@ -117,9 +117,7 @@ class JokeController extends Controller
 
     public function actionComment($id)
     {
-        $searchModel = new JokeCommentsSearch();
-        $dataProvider = $searchModel->search('id'==$id);
-        return $this->redirect(['joke-comments/index', 'searchModel'=>$searchModel, 'dataProvider' => $dataProvider]);
+        return $this->redirect(['joke-comments/index','joke_id'=>$id]);
 
     }
     /*
