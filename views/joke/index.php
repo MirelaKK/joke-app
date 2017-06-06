@@ -31,6 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'joke:ntext',
+            ['label'=> 'Kategorije',
+             'attribute' => 'category_id',
+             'value' => function($searchModel) {
+                        $string='';
+                        foreach ($searchModel->categories as $category) {
+                            $string = $string." ".$category->category;
+                        }
+                    return $string;
+            }],
             'submit_date',
             'submitter',
             ['label'=> 'Status',
