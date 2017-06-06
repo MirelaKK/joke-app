@@ -18,6 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Dodaj vic', ['create'], ['class' => 'btn btn-success']) ?>
+        <br>
+        <br>
+        <?= Html::a('Pretraga', ['joke/search'], ['class' => 'btn btn-default']) ?>
+        <?= $view ?>
+        
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
