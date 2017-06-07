@@ -13,7 +13,6 @@ use app\models\JokeWithCategory;
  */
 class JokeSearch extends JokeWithCategory
 {
-
     public function rules()
     {
         return [
@@ -38,9 +37,10 @@ class JokeSearch extends JokeWithCategory
     public function search($params)
     {
         $query = Joke::find();
-
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' =>['defaultOrder'=>['joke_status_id'=>SORT_ASC]]
         ]);
 
         $this->load($params);
