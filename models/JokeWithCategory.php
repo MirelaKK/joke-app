@@ -61,10 +61,7 @@ class JokeWithCategory extends Joke
             'category_ids' => 'Kategorije',
         ]);
     }
- 
-    /**
-     * load the post's categories (*2)
-     */
+
     public function loadCategories()
     {
         $this->category_ids = [];
@@ -80,9 +77,6 @@ class JokeWithCategory extends Joke
         }
     }
  
-    /**
-     * save the post's categories 
-     */
     public function saveCategories()
     {
         /* clear the categories of the joke before saving */

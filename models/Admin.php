@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "admin".
@@ -16,7 +17,7 @@ use Yii;
  *
  * @property Joke[] $jokes
  */
-class Admin extends \yii\db\ActiveRecord 
+class Admin extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -62,4 +63,37 @@ class Admin extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Joke::className(), ['admin_id' => 'id']);
     }
+    
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
+    public static function findByUsername($username)
+    {
+        return static::findOne(['email' => $username]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getAuthKey()
+    {
+        throw new \yii\web\NotSupportedException;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        throw new \yii\web\NotSupportedException;
+    }
+    
+    public function validatePassword($password){
+        return $this->password === $password;
+        //return Security::validatePassword($password, $this->password_hash);
+    }
+    public static function findIdentityByAccessToken($token, $type = NULL){
+        throw new \yii\web\NotSupportedException;
+    }
+    
 }

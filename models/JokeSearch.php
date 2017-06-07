@@ -6,11 +6,12 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Joke;
+use app\models\JokeWithCategory;
 
 /**
  * JokeSearch represents the model behind the search form about `app\models\Joke`.
  */
-class JokeSearch extends Joke
+class JokeSearch extends JokeWithCategory
 {
 
     public function rules()
@@ -56,6 +57,7 @@ class JokeSearch extends Joke
             'joke_rating' => $this->joke_rating,
         ]);
 
+        $category_ids=implode(' ', $this->category_ids);
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'joke', $this->joke])
             ->andFilterWhere(['like', 'submitter', $this->submitter])
@@ -63,7 +65,16 @@ class JokeSearch extends Joke
             ->andFilterWhere(['like', 'submit_date', $this->submit_date])
             ->andFilterWhere(['like', 'publish_date', $this->publish_date])
             ->andFilterWhere(['like', 'joke_of_day_date', $this->joke_of_day_date]);
-
+        
+        if(null != $this->category_ids){ 
+            foreach ($params['category_ids'] as $value) {
+            foreach ($this->category_ids as $key => $category_id) {
+               
+                   $query->orFilterWhere(['like', $value, $category_id]); 
+                }
+                
+            }
+        }
         return $dataProvider;
     }
 }

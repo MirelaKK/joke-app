@@ -37,17 +37,27 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            [
-                'label' => 'Login',
-                'url' => ['/admin/login']],
-            ],
-        ]);
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Login', 'url' => ['/admin/login']]
+            ) : (
+                '<li>'
+                . Html::beginForm(['/admin/logout'], 'post')
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->email . ')',
+                    ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
+            )
+            
+        ]]);
     NavBar::end();
     ?>
     <div class="container">
-       
-        <?= Nav::widget([
+     <?php   Yii::$app->user->isGuest ?(''):( 
+         print Nav::widget([
             'options'=>['class'=>'nav-tabs'],
+             
             'items' => [
                 [
                     'label' => 'Vicevi',
@@ -75,8 +85,9 @@ AppAsset::register($this);
                 ],
 ]
                 
-            ]);
-        ?>
+            ])
+    
+         ) ?>
         <?= $content ?>
     </div>
 </div>

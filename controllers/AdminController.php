@@ -8,6 +8,8 @@ use yii\filters\VerbFilter;
 use app\models\Admin;
 use app\models\AdminSearch;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+use app\models\LoginForm;
 
 class AdminController extends Controller
 {
@@ -26,6 +28,17 @@ class AdminController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['logout'],
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -58,11 +71,7 @@ class AdminController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    public function actionLogin()
-    {
-        return $this->render('login');
-    }
-
+    
     /**
      * Displays a single Admin model.
      * @param integer $id
@@ -139,5 +148,37 @@ class AdminController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+        /**
+     * Login action.
+     *
+     * @return string
+     */
+    public function actionLogin()
+    {
+        /*
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect(['admin/index']);
+        }*/
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->redirect(['joke/index']);
+        }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Logout action.
+     *
+     * @return string
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->redirect(['admin/index']);
     }
 }
