@@ -8,6 +8,7 @@ use app\models\JokeStatusSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * JokeStatusController implements the CRUD actions for JokeStatus model.
@@ -20,6 +21,17 @@ class JokeStatusController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','create','update','view','delete','comment'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','create','update','view','delete','comment'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -4,14 +4,12 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Joke;
-use app\models\Category;
 use app\models\JokeSearch;
-use app\models\JokeCommentsSearch;
 use app\models\JokeWithCategory;
 use yii\web\Controller;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class JokeController extends Controller
 {
@@ -21,6 +19,17 @@ class JokeController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','create','update','view','delete','comment','search'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','create','update','view','delete','comment','search'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

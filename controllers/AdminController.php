@@ -10,6 +10,7 @@ use app\models\AdminSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use app\models\LoginForm;
+use yii\base\Exception;
 
 class AdminController extends Controller
 {
@@ -30,11 +31,21 @@ class AdminController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['login', 'logout', 'signup','create','update','view'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['overview','create','update','view'],
                         'roles' => ['@'],
                     ],
                 ],

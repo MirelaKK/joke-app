@@ -8,6 +8,7 @@ use app\models\JokeRatingSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * JokeRatingController implements the CRUD actions for JokeRating model.
@@ -20,6 +21,17 @@ class JokeRatingController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index','create','update','view','delete','search'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index','create','update','view','delete','search'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
