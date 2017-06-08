@@ -73,10 +73,15 @@ class JokeController extends Controller
      * @return mixed
      */
     public function actionCreate()
+
     {
         $model = new JokeWithCategory();
+        $admin = Yii::$app->user->id;
  
         if ($model->load(Yii::$app->request->post())) {
+            if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=2;
+            }
             if ($model->save()) {
                 $model->saveCategories();
                 return $this->redirect(['index']);
@@ -85,6 +90,7 @@ class JokeController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'admin' => $admin,
         ]);
     }
 
@@ -98,8 +104,13 @@ class JokeController extends Controller
     {
         $model = JokeWithCategory::findOne($id);
         $model->loadCategories();
+        $admin = Yii::$app->user->id;
+
 
         if ($model->load(Yii::$app->request->post())) {
+            if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=2;
+            }
             if ($model->save()) {
                 $model->saveCategories();
                 return $this->redirect(['index']);
@@ -108,22 +119,63 @@ class JokeController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'admin' => $admin,
         ]);
     }
 
-    /**
-     * Deletes an existing Joke model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
+
+    /*
+     * Sets the status of model to deleted
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model -> joke_status_id= 4;
+        $model->save();
         return $this->redirect(['index']);
     }
+    /*
+     * Finds next Joke model with unapproved status
+     * Redirects to update action
+     */
+    public function actionLastJoke($id)
+    {
+        // find last unapproved joke in db
+        $lastUnapprovedJoke = Joke::find()->where(['joke_status_id'=>1])->orderBy(['id' => SORT_ASC])->one();
+       // checks if there actually are unapproved jokes and if there are
+        // checks if the active joke is the last one
+        if($this->hasUnapproved() && $lastUnapprovedJoke->id != $id){
+           // if not, redirecting to update action with next joke's id
+            $model  = Yii::$app->db
+                    ->createCommand('SELECT * FROM joke WHERE id < :id AND joke_status_id = :status_id ORDER BY id DESC')
+                    ->bindValue(':id', $id)
+                    ->bindValue(':status_id', 1)
+                    ->queryOne();
+             return $this->redirect(['update','id'=>$model['id']]);
+        }
+      
+        return $this->redirect(['index']); 
+    }
+    public function actionNextJoke($id)
+    {
+        $nextUnapprovedJoke = Joke::find()->where(['joke_status_id'=>1])->orderBy(['id' => SORT_DESC])->one();
+       
+        if($this->hasUnapproved() && $nextUnapprovedJoke->id != $id){
+            
+            $model  = Yii::$app->db
+                    ->createCommand('SELECT * FROM joke WHERE id > :id AND joke_status_id = :status_id')
+                    ->bindValue(':id', $id)
+                    ->bindValue(':status_id', 1)
+                    ->queryOne();
+             return $this->redirect(['update','id'=>$model['id']]);
+        }
+      
+        return $this->redirect(['index']);   
+    }
 
+    /*
+     * Redirects to comments which belong to specific Joke model 
+     */
     public function actionComment($id)
     {
         return $this->redirect(['joke-comments/index','joke_id'=>$id]);
@@ -158,5 +210,11 @@ class JokeController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    public function hasUnapproved(){
+        
+        $status = Joke::find()->where(['joke_status_id'=>1])->all();
+        
+        return isset($status);
     }
 }
