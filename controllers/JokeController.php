@@ -45,6 +45,7 @@ class JokeController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::$app->language = 'bs-BA';
         $searchModel = new JokeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
@@ -78,6 +79,12 @@ class JokeController extends Controller
         $admin = Yii::$app->user->id;
  
         if ($model->load(Yii::$app->request->post())) {
+
+            if(Yii::$app->request->post('submit')=='dodaj_pregledano_neodobreno') {
+                $model->joke_status_id=2;
+            } else if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=3;
+            }
             if ($model->save()) {
                 $model->saveCategories();
                 return $this->redirect(['index']);
@@ -104,6 +111,12 @@ class JokeController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
+
+            if(Yii::$app->request->post('submit')=='dodaj_pregledano_neodobreno') {
+                $model->joke_status_id=2;
+            } else if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=3;
+            }
             if ($model->save()) {
                 $model->saveCategories();
                 return $this->redirect(['index']);
