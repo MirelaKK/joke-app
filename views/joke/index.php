@@ -51,12 +51,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $searchModel->status->status;
             }],
             'approval_date',
+            'publish_date',
+            'joke_of_day_date',
             ['label'=> 'Admin',
              'attribute' => 'admin_id',
              'value' => function($searchModel) {
                         return $searchModel->admin->first_name." ".$searchModel->admin->last_name;
             }],
-            'joke_of_day_date',
             'joke_rating',
 
             ['header'=>'Akcija',
