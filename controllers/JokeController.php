@@ -73,11 +73,15 @@ class JokeController extends Controller
      * @return mixed
      */
     public function actionCreate()
+
     {
         $model = new JokeWithCategory();
         $admin = Yii::$app->user->id;
  
         if ($model->load(Yii::$app->request->post())) {
+            if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=2;
+            }
             if ($model->save()) {
                 $model->saveCategories();
                 return $this->redirect(['index']);
@@ -104,6 +108,9 @@ class JokeController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
+            if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=2;
+            }
             if ($model->save()) {
                 $model->saveCategories();
                 return $this->redirect(['index']);
