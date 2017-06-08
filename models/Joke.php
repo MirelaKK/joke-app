@@ -50,7 +50,12 @@ class Joke extends \yii\db\ActiveRecord
             ['approval_date', 'default','value'=>function(){
                 return date('Y-m-d H:i:s');
             },'when' => function ($model) {
-                return $model->joke_status_id == 2;
+                return $model->joke_status_id == 3;
+            }],
+            ['publish_date', 'default','value'=>function(){
+                return date('Y-m-d H:i:s');
+            },'when' => function ($model) {
+                return $model->joke_status_id == 4;
             }],
             ['submitter','default','value'=>function($model,$attributes){
                 $f_name = $this->admin->first_name;
