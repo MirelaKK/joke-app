@@ -75,6 +75,7 @@ class JokeController extends Controller
     public function actionCreate()
     {
         $model = new JokeWithCategory();
+        $admin = Yii::$app->user->id;
  
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
@@ -85,6 +86,7 @@ class JokeController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'admin' => $admin,
         ]);
     }
 
@@ -98,6 +100,8 @@ class JokeController extends Controller
     {
         $model = JokeWithCategory::findOne($id);
         $model->loadCategories();
+        $admin = Yii::$app->user->id;
+
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
@@ -108,6 +112,7 @@ class JokeController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'admin' => $admin,
         ]);
     }
 
