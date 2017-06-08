@@ -45,7 +45,6 @@ class JokeController extends Controller
      */
     public function actionIndex()
     {
-        \Yii::$app->language = 'bs-BA';
         $searchModel = new JokeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
