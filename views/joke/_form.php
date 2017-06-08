@@ -57,7 +57,7 @@ use dosamigos\datepicker\DatePicker;
         </div>
     
     <div class="form-group">
-                <?=Html::submitButton($model->isNewRecord ? 'Dodaj neodobreno' : 'Promijeni neodobreno', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
+                <?=Html::submitButton($model->isNewRecord ? 'Dodaj neodobreno a pregledano' : 'Promijeni neodobreno a pregledano', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'value'=>'dodaj_pregledano_neodobreno', 'name'=>'submit'])?>
         </div>
         <div class="form-group">
                 <?=Html::submitButton($model->isNewRecord ? 'Dodaj i odobri' : 'Promijeni i odobri', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'value'=>'dodaj_odobreno', 'name'=>'submit'])?>

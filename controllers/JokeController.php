@@ -79,8 +79,10 @@ class JokeController extends Controller
         $admin = Yii::$app->user->id;
  
         if ($model->load(Yii::$app->request->post())) {
-            if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+            if(Yii::$app->request->post('submit')=='dodaj_pregledano_neodobreno') {
                 $model->joke_status_id=2;
+            } else if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=3;
             }
             if ($model->save()) {
                 $model->saveCategories();
@@ -108,8 +110,10 @@ class JokeController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
-            if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+            if(Yii::$app->request->post('submit')=='dodaj_pregledano_neodobreno') {
                 $model->joke_status_id=2;
+            } else if(Yii::$app->request->post('submit')=='dodaj_odobreno') {
+                $model->joke_status_id=3;
             }
             if ($model->save()) {
                 $model->saveCategories();
