@@ -17,8 +17,9 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
+    
     <p>
-    <?= Html::a('Prethodni', ['update', 'id' => ($model->id===1)?($model->id):($model->id -1)], ['class' => 'btn btn-default pull-left']) ?>
-    <?= Html::a('Naredni', ['update', 'id' => $model->id+1], ['class' => 'btn btn-default pull-right']) ?>
+    <?= Html::a('Prethodni', ['last-joke', 'id' => $model->id], ['class' => 'btn btn-default pull-left']) ?>
+    <?= Html::a('Naredni', ['next-joke', 'id' => $model->id], ['class' => 'btn btn-default pull-right']) ?>
     </p>
 </div>
