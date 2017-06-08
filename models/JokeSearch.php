@@ -36,7 +36,7 @@ class JokeSearch extends JokeWithCategory
      */
     public function search($params)
     {
-        $query = Joke::find()->where(['not', ['joke_status_id' => 4]]);
+        $query = Joke::find()->where(['not', ['joke_status_id' => 5]]);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
