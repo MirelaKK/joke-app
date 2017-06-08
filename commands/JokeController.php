@@ -26,8 +26,8 @@ class JokeController extends Controller
     {
        for($i =0; $i <$number;$i++){
            
-            $model = Joke:: find()->where(['joke_status_id'=> 2])->one();
-            $model->joke_status_id= 3;
+            $model = Joke:: find()->where(['joke_status_id'=> 3])->one();
+            $model->joke_status_id= 4;
             $model->save();
         }
        
