@@ -51,6 +51,8 @@ use dosamigos\datepicker\DatePicker;
                     'format' => 'yyyy-mm-dd'
                 ]
             ])?>
+            </div>
+        <div class="col-md-4">
             <?= $form->field($model, 'publish_date')->widget(
             DatePicker::className(), [
                  'inline' => false, 
