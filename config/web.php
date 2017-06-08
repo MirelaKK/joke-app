@@ -6,6 +6,7 @@ $config = [
     'id' => 'vicevi',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'bs-BA',
     'components' => [
         'request' => [
             'cookieValidationKey' => '5eSqizwZSQMIdLu4lzzGKuV-aELrZonE',
