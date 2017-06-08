@@ -123,7 +123,7 @@ class JokeController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model -> joke_status_id= 4;
+        $model -> joke_status_id= 5;
         $model->save();
         return $this->redirect(['index']);
     }
