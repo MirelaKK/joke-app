@@ -35,9 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'joke:ntext',
             ['label'=> 'Kategorije',
-             'attribute' => 'category_id',
+             'attribute' => 'category_ids',
              'value' => function($searchModel) {
                         $string='';
+                        $searchModel->loadCategories();
                         foreach ($searchModel->categories as $category) {
                             $string = $string." ".$category->category;
                         }

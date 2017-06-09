@@ -15,7 +15,8 @@ use dosamigos\datepicker\DatePicker;
 
 <?php $form = ActiveForm::begin([
     //'layout' => 'horizontal',
-    
+    'action' => ['index'],
+    'method'=>'get',
     'fieldConfig' => [
         'horizontalCssClasses' => [
             'label' => 'col-sm-2',
@@ -29,7 +30,7 @@ use dosamigos\datepicker\DatePicker;
         <div class="col-md-4">
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?> 
             <?= $form->field($model, 'joke')->textarea(['rows' => 6]) ?>
-            <?= $form->field($model, 'category_ids')-> dropDownList(Category::getAvailableCategories(),['prompt'=>'Izaberi kategoriju'])->label('Kategorije')?>
+            <?= $form->field($model, 'category_ids')-> checkBoxList(Category::getAvailableCategories(),['prompt'=>'Izaberi kategoriju'])->label('Kategorije')?>
        </div>
 
         <div class="col-md-4">
@@ -74,7 +75,7 @@ use dosamigos\datepicker\DatePicker;
             ])->hint('Ostaviti prazno ako nije bio vic dana');?> 
              <?= $form->field($model, 'joke_rating') ?>
              </div>
-
+    </div>
          <div class="form-group">
         <?= Html::submitButton('Traži', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Resetuj', ['class' => 'btn btn-default']) ?>        
