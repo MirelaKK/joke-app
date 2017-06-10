@@ -24,6 +24,7 @@ use Yii;
  * @property Category[] $categories
  * @property JokeComments[] $jokeComments
  * @property JokeRating[] $jokeRatings
+ * @property JokeCategory[] $jokeCategories
  */
 class Joke extends \yii\db\ActiveRecord
 {
@@ -130,4 +131,21 @@ class Joke extends \yii\db\ActiveRecord
     {
         return $this->hasMany(JokeRating::className(), ['joke_id' => 'id']);
     }
+    public function getJokeCategories(){
+        
+        return $this->hasMany(JokeCategory::className(),['joke_id'=>'id']);
+    }
+    public function getJokeRating(){
+        
+        if(sizeof($this->jokeRatings)==0){
+            return 0;
+        }
+        $sum=0;
+        foreach ($this->jokeRatings as $rating) {
+            $sum+=$rating->joke_rating;
+        }
+        return $sum/(sizeof($this->jokeRatings));
+
+        }
+ 
 }

@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'joke:ntext',
             ['label'=> 'Kategorije',
              'attribute' => 'category_ids',
              'value' => function($searchModel) {
@@ -53,15 +52,16 @@ $this->params['breadcrumbs'][] = $this->title;
             }],
             'approval_date',
             'publish_date',
-            'joke_of_day_date',
-            
+            'joke_of_day_date',           
+            ['attribute'=>'joke_rating',
+                'value'=>function($searchModel) {
+                        return $searchModel->getJokeRating();
+            }],
             ['label'=> 'Admin',
              'attribute' => 'admin_id',
              'value' => function($searchModel) {
                         return $searchModel->admin->first_name." ".$searchModel->admin->last_name;
             }],
-            'joke_rating',
-
             ['header'=>'Akcija',
              'class' => 'yii\grid\ActionColumn',
             'buttons'=> [
