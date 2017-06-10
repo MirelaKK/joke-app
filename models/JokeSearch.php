@@ -73,6 +73,8 @@ class JokeSearch extends JokeWithCategory
             'admin_id' => $this->admin_id,
             'joke_rating' => $this->joke_rating,
         ]);
+        
+        $ids = $this->getJokeIdsFromCategoryIds($params);
 
         $query->andFilterWhere(['in','id',$ids])
             ->andFilterWhere(['like', 'title', $this->title])
@@ -84,6 +86,7 @@ class JokeSearch extends JokeWithCategory
     }
     protected function getJokeIdsFromCategoryIds($params){
             if(isset($params['JokeSearch']['category_ids'])){
+
            $category_ids=[];
        
            foreach($params['JokeSearch']['category_ids'] as $category_id){
@@ -100,6 +103,7 @@ class JokeSearch extends JokeWithCategory
             }
 
         return $ids;
+
         }
     }
 }
