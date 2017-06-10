@@ -5,11 +5,8 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Joke;
 use app\models\JokeWithCategory;
-use yii\helpers\ArrayHelper;
 use app\models\JokeCategory;
-use app\models\Category;
 
 /**
  * JokeSearch represents the model behind the search form about `app\models\Joke`.
@@ -44,7 +41,8 @@ class JokeSearch extends JokeWithCategory
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' =>['defaultOrder'=>['joke_status_id'=>SORT_ASC]]
+            'sort' =>['defaultOrder'=>['joke_status_id'=>SORT_ASC,
+                                        'submit_date'=>SORT_ASC]]
         ]);
 
         $this->load($params);
@@ -52,21 +50,12 @@ class JokeSearch extends JokeWithCategory
         if (!$this->validate()) {
             return $dataProvider;
         }
-
-        function range($query,$param,$par) {
-            if(!empty($param) && strpos($param,'-') !== false) { 
-            list($start_date, $end_date) = explode(' - ', $param); 
-            $query->andFilterWhere(['between',$par, $start_date, $end_date]); 
-            } 
-        }
+         // grid filtering conditions
+        $this->searchDateRange($query,$this->joke_of_day_date,'joke_of_day_date');  
+        $this->searchDateRange($query,$this->approval_date,'approval_date');
+        $this->searchDateRange($query,$this->publish_date,'publish_date');
+        $this->searchDateRange($query,$this->submit_date,'submit_date');   
         
-        range($query,$this->joke_of_day_date,'joke_of_day_date');  
-        range($query,$this->approval_date,'approval_date');
-        range($query,$this->publish_date,'publish_date');
-        range($query,$this->submit_date,'submit_date');   
-        
-
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'joke_status_id' => $this->joke_status_id,
@@ -84,8 +73,13 @@ class JokeSearch extends JokeWithCategory
         
         return $dataProvider;
     }
-    protected function getJokeIdsFromCategoryIds($params){
-            if(isset($params['JokeSearch']['category_ids'])){
+    /*
+     * search helper method for seraching many-to-many related model
+     * @param array $params
+     * @return mixed
+     */
+    public function getJokeIdsFromCategoryIds($params){
+            if(!empty($params['JokeSearch']['category_ids'])){
 
            $category_ids=[];
        
@@ -105,5 +99,15 @@ class JokeSearch extends JokeWithCategory
         return $ids;
 
         }
+        return;
+    }
+    /*
+     * search helper method for getting result from specified range
+     */
+    public function searchDateRange($query,$param,$par) {
+            if(!empty($param) && strpos($param,'-') !== false) { 
+            list($start_date, $end_date) = explode(' - ', $param); 
+            $query->andFilterWhere(['between',$par, $start_date, $end_date]); 
+            } 
     }
 }
