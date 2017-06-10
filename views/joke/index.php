@@ -54,6 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'approval_date',
             'publish_date',
             'joke_of_day_date',
+            
             ['label'=> 'Admin',
              'attribute' => 'admin_id',
              'value' => function($searchModel) {

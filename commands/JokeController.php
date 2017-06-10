@@ -33,4 +33,32 @@ class JokeController extends Controller
        
        echo 'Objavljeno!';
     }
+
+     public function actionJokeOfDay()
+    {     
+   
+        if(Joke:: find()->where(['not', ['joke_of_day_date' => null]])->andWhere(['joke_status_id' => 3])->count()==Joke::find()->where(['joke_status_id' => 3])->count()) {
+           //send email to admin that we don't have candidates for joke of day
+        } else {
+            $array=[];
+            $model= Joke::find()->where(['joke_of_day_date' => null])->andWhere(['joke_status_id' => 3])->all();
+            
+            if(!empty($model)){              
+                foreach ($model as $key => $value) {
+                      $array[]=($value['joke_rating']); 
+                }  
+                $max=max($array);                                            
+            }
+
+            $model= Joke::find()->where(['joke_of_day_date' => null])->andWhere(['joke_status_id' => 3])->andWhere(['joke_rating' => $max])->one();
+            $date=date('Y-m-d');
+            $model->joke_of_day_date=$date;
+            $model->save();
+           
+        }
+           
+
+       echo "Imamo vic dana!";
+    }
+
 }

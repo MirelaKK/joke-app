@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Joke;
 use app\models\JokeWithCategory;
+use yii\helpers\ArrayHelper;
 use app\models\JokeCategory;
 use app\models\Category;
 
@@ -15,12 +16,12 @@ use app\models\Category;
  */
 class JokeSearch extends JokeWithCategory
 {
+
     public function rules()
     {
-        return [
+        return [ 
             [['id', 'joke_status_id', 'admin_id', 'joke_rating'], 'integer'],
-            [['title', 'joke', 'submit_date', 'submitter', 'approval_date', 'joke_of_day_date'], 'safe'],
-        ];
+            [['title', 'joke', 'submit_date', 'submitter', 'approval_date', 'joke_of_day_date'], 'safe']];
     }
 
     public function scenarios()
@@ -37,6 +38,7 @@ class JokeSearch extends JokeWithCategory
      * @return ActiveDataProvider
      */
     public function search($params)
+    
     {
         $query = JokeWithCategory::find()->where(['not', ['joke_status_id' => 5]]);
         
@@ -51,6 +53,19 @@ class JokeSearch extends JokeWithCategory
             return $dataProvider;
         }
 
+        function range($query,$param,$par) {
+            if(!empty($param) && strpos($param,'-') !== false) { 
+            list($start_date, $end_date) = explode(' - ', $param); 
+            $query->andFilterWhere(['between',$par, $start_date, $end_date]); 
+            } 
+        }
+        
+        range($query,$this->joke_of_day_date,'joke_of_day_date');  
+        range($query,$this->approval_date,'approval_date');
+        range($query,$this->publish_date,'publish_date');
+        range($query,$this->submit_date,'submit_date');   
+        
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -64,16 +79,14 @@ class JokeSearch extends JokeWithCategory
         $query->andFilterWhere(['in','id',$ids])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'joke', $this->joke])
-            ->andFilterWhere(['like', 'submitter', $this->submitter])
-            ->andFilterWhere(['like', 'approval_date', $this->approval_date])
-            ->andFilterWhere(['like', 'submit_date', $this->submit_date])
-            ->andFilterWhere(['like', 'publish_date', $this->publish_date])
-            ->andFilterWhere(['like', 'joke_of_day_date', $this->joke_of_day_date]);
-  
+            ->andFilterWhere(['like', 'submitter', $this->submitter]);
+            
+        
         return $dataProvider;
     }
     protected function getJokeIdsFromCategoryIds($params){
-               if(isset($params['JokeSearch']['category_ids'])){
+            if(isset($params['JokeSearch']['category_ids'])){
+
            $category_ids=[];
        
            foreach($params['JokeSearch']['category_ids'] as $category_id){
@@ -89,7 +102,8 @@ class JokeSearch extends JokeWithCategory
                 $ids[]=$subquery->joke_id;
             }
 
-       return $ids;
+        return $ids;
+
         }
     }
 }
