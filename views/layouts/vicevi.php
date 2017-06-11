@@ -30,8 +30,8 @@ MyAppAsset::register($this);
 
     <div class="navigation">
       <ul>
-        <li><?= Html::a('Naslovna', Url::to(['/category/naslovna'])) ?></li>
-        <li><?= Html::a('Najbolji vicevi', Url::to(['/category/najbolji_vicevi'])) ?></li>
+        <li><?= Html::a('Naslovna', Url::to(['/site/index'])) ?></li>
+        <li><?= Html::a('Najbolji vicevi', Url::to(['/site/najbolji_vicevi'])) ?></li>
         <li><?= Html::a('Najnoviji vicevi', Url::to(['/category/najnoviji_vicevi'])) ?></li>
         <?php 
             $count=Category::find()->count();
@@ -51,8 +51,15 @@ MyAppAsset::register($this);
     </div>
 
     <div class="content-box">
+      <div class="content-header">
+        <h1>Vicevi</h1>
+      </div>
+    </div>
+
+    <div class="jokes">
     <?= $content ?>
     </div>
+    
     <div class="footer">&copy; Vicevi 2017</div>
 <?php $this->endBody() ?>
 </body>

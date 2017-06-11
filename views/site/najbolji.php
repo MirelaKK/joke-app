@@ -1,27 +1,18 @@
 <?php
 
 /* @var $this yii\web\View */
-
-$this->title = 'Vicevi';
+use yii\helpers\Html;
+$this->title = 'Najbolji vicevi';
 ?>
 
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-    	<tr>
-    		<th>Najbolji vicevi</th>
-    	</tr>
-    </thead>
-    <tbody>
-    	<?php $newmodel=$model->all();
-    	for ($i=0;$i<$model->count();$i++): ?>
-    	<tr>
-    		<?php foreach ($newmodel[$i] as $k=>$v):  ?>
-    		<td><?php if($k=='title') echo $v ?></td>
-    		<td><?php if($k=='joke') echo $v ?></td>
-    		<?php endforeach; ?> 
-    	</tr>
-    	<?php endfor; ?>
-    </tbody>
-  </table>
-</div>
+   
+    <?php $newmodel=$model->all();
+        for ($i=0;$i<$model->count();$i++): ?>
+                    
+            <h2><?= Html::a($newmodel[$i]['title'], ['site/joke', 'id' => $newmodel[$i]['id']], ['class' => 'profile-link']) ?></h2>
+            <p><?php echo $newmodel[$i]['joke']; ?></p>             
+            
+        <?php endfor; ?>
+         
+        
+

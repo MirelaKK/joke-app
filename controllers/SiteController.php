@@ -10,6 +10,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
 use app\models\Joke;
+use yii\base\Model;
 
 class SiteController extends Controller
 {
@@ -103,13 +104,22 @@ class SiteController extends Controller
     {
         $model = Joke::find()->orderBy(['joke_rating' => SORT_DESC]);
 
-        
-        
         return $this->render('najbolji', [
             'model' => $model,
         ]);
     }
 
-    
+    public function actionJoke($id)
+    {
+        
+        $model = Joke::findOne($id);
+
+        return $this->render('joke', [
+            'model' => $model]);
+        
+    }
+
+        
+
     
 }
