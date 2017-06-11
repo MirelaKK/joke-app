@@ -6,13 +6,10 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
-use app\models\EntryForm;
 use app\models\Joke;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\JokeCategory;
+use app\models\JokeSearch;
 use app\models\SiteSearch;
 use app\models\Contact;
 
@@ -102,6 +99,16 @@ class SiteController extends Controller
         return $this->render('new', [
             'listDataProvider' => $dataProvider,
         ]);
+    }
+    
+    public function actionJokeCategory($id){
+        $model = new JokeSearch();
+        $dataProvider = $model->search(['JokeSearch'=>['category_ids'=>[$id]]]);
+
+        return $this->render('best', [
+            'listDataProvider' => $dataProvider,
+        ]);
+
     }
 
     public function actionSearch(){
