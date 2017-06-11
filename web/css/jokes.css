@@ -83,3 +83,7 @@ p {
   position: relative;
   top: 200px;
 }
+.center-block {
+  display: block;
+  width: 60%;
+}

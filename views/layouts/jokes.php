@@ -11,8 +11,11 @@ use app\assets\AppAsset;
 use yii\helpers\Url;
 use app\assets\MyAppAsset;
 use app\models\Category;
+use app\models\SiteSearch;
+use yii\bootstrap\ActiveForm;
 
 MyAppAsset::register($this);
+$model = new SiteSearch();
 
 ?>
 <?php $this->beginPage() ?>
@@ -28,11 +31,11 @@ MyAppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <div class="container">
-    <div class="content-box">
-      <div class="content-header">
+          <div class="content-header">
         <h1>Vicevi</h1>
       </div>
 
+    <div class="content-box">
     <div class="body-content">
         
 
@@ -58,31 +61,47 @@ MyAppAsset::register($this);
                 </ul>
             </div>
             <div class="col-lg-8">
-                    <div class="jokes">
+                <div class="center-block">
                     <?= $content ?>
-                    </div>
-            </div>
-            <div class="col-lg-2">
-                <?php $form = ActiveForm::begin([
-                    'layout' => 'horizontal',
-                    'action' => ['index'],
-                        'method' => 'get'
-                ]); ?>
-                <div class="site-search">
-                <h3>Pretraga</h3>
                 </div>
             </div>
+            <div class="col-lg-2">
+                <div class="site-search">
+                    <h4> Pretraga </h4>
+                <?php $form = ActiveForm::begin([
+                    'layout' => 'horizontal',
+                    'action'=>['site/search'],
+                    'method'=>'get',
+  
+                ]); ?>
+                <div>  
+                <?= $form->field($model, 'search')->textInput()->label(false) ?>
+                </div>
+        <div class="form-group">
+                <?=Html::submitButton('Traži', ['class' => 'btn btn-primary'])?>
         </div>
-    </div> <!-- body content -->
-    </div> <!-- content box -->
-</div>  <!-- container -->
-    
-    
+
+
+
+</div>
+<?php ActiveForm::end() ?>
+
+
+                </div>
+        </div>   
+        
+  
+        <div class="row">
     <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; Vicevi 2017</p>
     </div>
-</footer>
+    </footer> 
+        </div>
+         </div> <!-- body content --> 
+    </div> <!-- content box --> 
+</div>  <!-- container -->
+
 <?php $this->endBody() ?>
 </body>
 </html>
