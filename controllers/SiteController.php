@@ -10,6 +10,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
 use app\models\Joke;
+use yii\base\Model;
 
 class SiteController extends Controller
 {
@@ -108,10 +109,10 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionJoke()
+    public function actionJoke($id)
     {
-        $id=Yii::$app->request->get('id');
-        $model = Joke::find($id)->one();
+        
+        $model = Joke::findOne($id);
 
         return $this->render('joke', [
             'model' => $model]);
