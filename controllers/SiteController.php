@@ -11,6 +11,9 @@ use app\models\ContactForm;
 use app\models\EntryForm;
 use app\models\Joke;
 use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use app\models\JokeCategory;
+
 
 class SiteController extends Controller
 {
@@ -100,26 +103,20 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionNajbolji_vicevi()
+    public function actionBest()
     {
-        $model = Joke::find()->orderBy(['joke_rating' => SORT_DESC]);
+        //$model = Joke::find()->orderBy(['joke_rating' => SORT_DESC]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Joke::find()->orderBy(['joke_rating' => SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
 
-        return $this->render('najbolji', [
-            'model' => $model,
+        return $this->render('best', [
+            'listDataProvider' => $dataProvider,
         ]);
     }
-
-    public function actionJoke($id)
-    {
-        
-        $model = Joke::findOne($id);
-
-        return $this->render('joke', [
-            'model' => $model]);
-        
-    }
-
-        
 
     
 }
