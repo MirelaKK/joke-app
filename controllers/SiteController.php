@@ -17,7 +17,7 @@ use app\models\JokeCategory;
 
 class SiteController extends Controller
 {
-   
+   public $layout='jokes';
     /**
      * @inheritdoc
      */
@@ -105,7 +105,6 @@ class SiteController extends Controller
      */
     public function actionBest()
     {
-        //$model = Joke::find()->orderBy(['joke_rating' => SORT_DESC]);
         $dataProvider = new ActiveDataProvider([
             'query' => Joke::find()->orderBy(['joke_rating' => SORT_DESC]),
             'pagination' => [
@@ -114,6 +113,20 @@ class SiteController extends Controller
         ]);
 
         return $this->render('best', [
+            'listDataProvider' => $dataProvider,
+        ]);
+    }
+
+     public function actionNew()
+    {   
+        $dataProvider = new ActiveDataProvider([
+            'query' => Joke::find()->orderBy(['publish_date' => SORT_DESC]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('new', [
             'listDataProvider' => $dataProvider,
         ]);
     }
