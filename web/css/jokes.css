@@ -1,13 +1,12 @@
 body {
-  background: url("https://s-media-cache-ak0.pinimg.com/originals/3f/fa/94/3ffa94f8e7562ba8fb7d32f5f4333b65.jpg") no-repeat bottom center;
-  background-size: cover;
+ background-size: cover;
   font-weight: bold;
   overflow: scroll;
   text-align: center;
-  margin: 0;
+  margin: 20px 20px 20px;
   padding: 0;
   background-attachment: fixed;
-  color:rgb(255, 204, 255);
+  color: steelblue;
 }
 
 .navigation {
@@ -38,7 +37,6 @@ body {
 }
 
 .content-box {
-  background-image: url("http://68.media.tumblr.com/e497eb79476fdb2a82ce4935f6f0731c/tumblr_mjiobk86Lt1s7ytkjo1_500.jpg");
   background-size:cover;
   background-attachment:fixed;
   position: relative;
@@ -52,7 +50,6 @@ body {
   text-align: center;
   font-family: 'Indie Flower', sans-serif;
   font-weight: 900;
-  color: #EEEFF1;
   margin: 0 auto;
   position: relative;
   /*top: 50px;*/
