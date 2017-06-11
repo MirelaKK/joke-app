@@ -13,7 +13,8 @@ use app\models\Joke;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\JokeCategory;
-
+use app\models\SiteSearch;
+use app\models\Contact;
 
 class SiteController extends Controller
 {
@@ -52,7 +53,11 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ]
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
         ];
     }
 
@@ -106,6 +111,46 @@ class SiteController extends Controller
 
         return $this->render('best', [
             'listDataProvider' => $dataProvider,
+        ]);
+    }
+
+   /**
+     * Creates a new Joke model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionSend()
+    {
+        $model = new Joke();
+ 
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->save()) {
+               echo "";
+            }
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+            'admin' => $admin,
+        ]);
+    }
+
+    /**
+     * Displays contact page.
+     *
+     * @return string
+     */
+    public function actionContact()
+    {
+        $model = new Contact();
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+            Yii::$app->session->setFlash('contactFormSubmitted');
+
+            return $this->refresh();
+        }
+        return $this->render('contact', [
+            'model' => $model,
         ]);
     }
 }
