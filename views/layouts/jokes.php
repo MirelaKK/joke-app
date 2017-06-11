@@ -57,7 +57,7 @@ $model = new SiteSearch();
                       ?>
 
                       <li><?= Html::a('Pošaljite vic', Url::to(['/site/send'])) ?></li>
-                      <li><?= Html::a('Kontakt', Url::to(['/category/contact'])) ?></li>
+                      <li><?= Html::a('Kontakt', Url::to(['/site/contact'])) ?></li>
                 </ul>
             </div>
             <div class="col-lg-8">

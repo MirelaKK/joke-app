@@ -42,7 +42,7 @@ class Joke extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'joke','admin_id'], 'required','message' => 'Polje ne može biti prazno.'],
+            [['title', 'joke'], 'required','message' => 'Polje ne može biti prazno.'],
             [['joke'], 'string'],
             ['submit_date', 'default','value'=>function($model,$attributes){
                 return date('Y-m-d H:i:s');

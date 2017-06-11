@@ -115,24 +115,19 @@ class SiteController extends Controller
     }
 
    /**
-     * Creates a new Joke model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * Creates a new Joke model and sends data to database.
+     * @return string
      */
-    public function actionSend()
-    {
+    
+    public function actionSend(){
         $model = new Joke();
- 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            Yii::$app->session->setFlash('jokeSent');
 
-            if ($model->save()) {
-               echo "";
-            }
+            $model->save();
         }
-
-        return $this->render('create', [
+        return $this->render('send', [
             'model' => $model,
-            'admin' => $admin,
         ]);
     }
 
