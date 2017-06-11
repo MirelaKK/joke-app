@@ -75,7 +75,7 @@ use kartik\daterange\DateRangePicker;
             ])->hint('Ostaviti prazno ako nije bio vic dana');?> 
              <?= $form->field($model, 'joke_rating') ?>
              </div>
-    </div>
+
          <div class="form-group">
         <?= Html::submitButton('Traži', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Resetuj', ['class' => 'btn btn-default']) ?>        

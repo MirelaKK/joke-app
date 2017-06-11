@@ -103,13 +103,22 @@ class SiteController extends Controller
     {
         $model = Joke::find()->orderBy(['joke_rating' => SORT_DESC]);
 
-        
-        
         return $this->render('najbolji', [
             'model' => $model,
         ]);
     }
 
-    
+    public function actionJoke()
+    {
+        $id=Yii::$app->request->get('id');
+        $model = Joke::find($id)->one();
+
+        return $this->render('joke', [
+            'model' => $model]);
+        
+    }
+
+        
+
     
 }
