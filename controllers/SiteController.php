@@ -14,7 +14,7 @@ use app\models\SiteSearch;
 use app\models\Contact;
 use app\models\Category;
 use app\models\JokeCommentsSearch;
-use app\models\JokeComments;
+use app\models\JokeRating;
 
 
 class SiteController extends Controller
@@ -140,9 +140,14 @@ class SiteController extends Controller
         $jokeModel= Joke::findOne($id);
         $commentModel= new JokeCommentsSearch();
         $dataProvider = $commentModel->search(['joke_id'=>$id]);
+        $ratingModel = new JokeRating();
         
         // Saving comments
          if ($commentModel->load(Yii::$app->request->post()) && $commentModel->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
+        //saving rating
+        if ($ratingModel->load(Yii::$app->request->post()) && $ratingModel->save()) {
                 return $this->redirect(['category', 'id' => $id]);
         }
         
@@ -150,6 +155,7 @@ class SiteController extends Controller
             'jokeModel' => $jokeModel,
             'commentModel' => $commentModel,
             'dataProvider' => $dataProvider,
+            'ratingModel' =>$ratingModel
         ]);
 
     }
@@ -208,7 +214,7 @@ class SiteController extends Controller
      * 
      */
     public function actionLastJoke($id)
-    {
+    {   $ratingModel = new JokeRating();
         
         $search_model=Joke::findOne($id);
         $category_name= $search_model->categories;
@@ -242,7 +248,8 @@ class SiteController extends Controller
                 return $this->render('joke', [
                     'jokeModel' => $query,
                     'commentModel' => $commentModel,
-                    'dataProvider'=>$dataProvider
+                    'dataProvider'=>$dataProvider,
+            'ratingModel' =>$ratingModel
                 ]);
             }  
         }  
@@ -259,6 +266,7 @@ class SiteController extends Controller
      */
     public function actionNextJoke($id)
     {
+        $ratingModel = new JokeRating();
         
         $search_model=Joke::findOne($id);
         $category_name= $search_model->categories;
@@ -285,7 +293,8 @@ class SiteController extends Controller
                 return $this->render('joke', [
                     'jokeModel' => $query,
                     'commentModel' => $commentModel,
-                    'dataProvider'=>$dataProvider
+                    'dataProvider'=>$dataProvider,
+            'ratingModel' =>$ratingModel
                 ]);
             }
         }

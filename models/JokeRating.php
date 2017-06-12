@@ -37,7 +37,7 @@ class JokeRating extends \yii\db\ActiveRecord
             }],
             [['joke_id'], 'integer'],
             [['joke_rating'], 'number'],
-            [['ip'], 'ip', 'ipv6' => false],
+            [['ip'], 'ip'],
             [['joke_id'], 'exist', 'skipOnError' => true, 'targetClass' => Joke::className(), 'targetAttribute' => ['joke_id' => 'id']],
         ];
     }

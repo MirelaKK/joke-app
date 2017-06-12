@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\widgets\ActiveForm;
+use kartik\rating\StarRating;
 /* @var $this yii\web\View */
 
 $this->title = $jokeModel->title;
@@ -12,9 +13,24 @@ $this->params['breadcrumbs'][] = $this->title;
 <h2><?= $jokeModel->title; ?></h2>
   <p><?= $jokeModel->joke; ?></p> 
   
-<!-- failed attempt to add star-rating -->
-  <input id="input-21e" value="0" type="number" class="rating" data-min=0 data-max=5 data-step=1 data-size="xs" data-rtl="true"
-               title="">
+<div class="joke-rating-form">
+ <?php $form = ActiveForm::begin(); ?>
+<?= $form->field($ratingModel, 'joke_rating')->widget(StarRating::classname(), [
+    'pluginOptions' => ['size'=>'xs',
+                         'stars' => 5, 
+                            'min' => 0,
+                            'max' => 5,
+                            'step' => 1,
+                        'lang'=>'hr']
+])->label(false)?>
+    <?= $form->field($commentModel, 'joke_id')->hiddenInput(['value'=> $jokeModel->id])->label(false);?>
+    
+    <?= $form->field($commentModel, 'ip')->hiddenInput(['value'=>  '1:1:1:2'])->label(false); ?>
+    <div class="form-group">
+        <?= Html::submitButton('Rate', ['class' =>'btn btn-danger']) ?>
+</div>
+    <?php ActiveForm::end();?>
+</div>
   <hr>
 	<p>
     <?= Html::a('Prethodni vic', ['site/last-joke', 'id' => $jokeModel->id], ['class' => 'btn btn-default pull-left']) ?>
