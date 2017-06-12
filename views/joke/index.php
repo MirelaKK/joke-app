@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['label'=> 'Admin',
              'attribute' => 'admin_id',
              'value' => function($searchModel) {
-                        return $searchModel->admin->first_name." ".$searchModel->admin->last_name;
+                        return $searchModel->admin['email'];
             }],
             ['header'=>'Akcija',
              'class' => 'yii\grid\ActionColumn',
