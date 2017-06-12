@@ -9,9 +9,11 @@ use yii\filters\VerbFilter;
 use app\models\Joke;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\JokeSearch;
+use app\models\SiteJokeSearch;
 use app\models\SiteSearch;
 use app\models\Contact;
+use app\models\Category;
+
 
 class SiteController extends Controller
 {
@@ -116,14 +118,28 @@ class SiteController extends Controller
     }
     
     public function actionJokeCategory($id){
-        $model = new JokeSearch();
-        $dataProvider = $model->search(['JokeSearch'=>['category_ids'=>[$id]]]);
+        $model = new SiteJokeSearch();
+        $dataProvider = $model->search(['SiteJokeSearch'=>['category_ids'=>[$id]]]);
 
-        return $this->render('best', [
+        return $this->render('category', [
             'listDataProvider' => $dataProvider,
+            'id'=>$id,
         ]);
 
     }
+
+    /**
+    *function for listing jokes from categories
+    **/
+    public function actionCategory($id){
+        $query= Joke::findOne($id);
+
+        return $this->render('joke', [
+            'query' => $query,
+        ]);
+
+    }
+
 
     public function actionSearch(){
         
@@ -168,6 +184,93 @@ class SiteController extends Controller
         return $this->render('contact', [
             'model' => $model,
         ]);
+    }
+
+
+    /*
+     * Finds last Joke model within same category 
+     * 
+     */
+    public function actionLastJoke($id)
+    {
+        
+        $search_model=Joke::findOne($id);
+        $category_name= $search_model->categories;
+        foreach ($category_name as $k=>$v){ 
+           $category=$v['category']; 
+           $category_id=$v['id'];
+        }
+
+        $jokes=Category::findOne($category_id)->jokes;
+
+        $ids=[];
+        
+        foreach ($jokes as $k=>$v){ 
+            if($v['joke_status_id']==4) {
+                $ids[]=$v['id'];
+            }
+        }
+
+        //$ids sorted desc but have to sort key values
+        //and than keep together those key and values
+        arsort($ids);
+        $keys = array_keys($ids);
+        sort($keys);
+        $sorted_ids = array_combine($keys, array_values($ids));
+        
+        for($i=0;$i<count($sorted_ids);$i++) {
+            if($sorted_ids[$i]<$id) {
+                $query= Joke::findOne($sorted_ids[$i]);
+                return $this->render('joke', [
+                    'query' => $query,
+                ]);
+            }  
+        }  
+         
+        if(empty($query)) {
+           return $this->redirect(Yii::$app->request->referrer); 
+            }
+     
+    }
+
+    /*
+     * Finds next Joke model within same category 
+     * 
+     */
+    public function actionNextJoke($id)
+    {
+        
+        $search_model=Joke::findOne($id);
+        $category_name= $search_model->categories;
+        foreach ($category_name as $k=>$v){ 
+           $category=$v['category']; 
+           $category_id=$v['id'];
+        }
+
+        $jokes=Category::findOne($category_id)->jokes;
+
+        $ids=[];
+
+        foreach ($jokes as $k=>$v){ 
+            if($v['joke_status_id']==4) {
+                $ids[]=$v['id'];
+            }
+        }
+        
+        for($i=0;$i<count($ids);$i++) {
+            if($ids[$i]>$id) {
+                $query= Joke::findOne($ids[$i]);
+                return $this->render('joke', [
+                    'query' => $query,
+                ]);
+            }
+        }
+
+        if(empty($query)) {
+           return $this->redirect(Yii::$app->request->referrer); 
+        }
+        
+     
     }
     
 }
