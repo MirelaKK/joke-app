@@ -58,7 +58,7 @@ class SiteSearch extends Joke
          // grid filtering conditions 
 
         $query->andFilterWhere(['like', 'title', $params['SiteSearch']['search']])
-            ->andFilterWhere(['like', 'title', $params['SiteSearch']['search']]);
+            ->orFilterWhere(['like', 'joke', $params['SiteSearch']['search']]);
             
         
         return $dataProvider;
