@@ -13,6 +13,8 @@ use app\models\SiteJokeSearch;
 use app\models\SiteSearch;
 use app\models\Contact;
 use app\models\Category;
+use app\models\JokeCommentsSearch;
+use app\models\JokeComments;
 
 
 class SiteController extends Controller
@@ -76,7 +78,7 @@ class SiteController extends Controller
             ],
         ]);
         
-        $new = $this->renderPartial('best', ['listDataProvider'=>$dataProvider]);
+        $new = $this->renderPartial('all', ['listDataProvider'=>$dataProvider]);
         
         return $this->render('index',[
             'joke_of_day'=> $joke_of_day,
@@ -97,8 +99,8 @@ class SiteController extends Controller
                 'pageSize' => 20,
             ],
         ]);
-
-        return $this->render('best', [
+        $this->view->title .= 'Najbolji vicevi';
+        return $this->render('all', [
             'listDataProvider' => $dataProvider,
         ]);
     }
@@ -111,8 +113,9 @@ class SiteController extends Controller
                 'pageSize' => 20,
             ],
         ]);
-
-        return $this->render('new', [
+        $this->view->title .= 'Najnoviji vicevi';
+        
+        return $this->render('all', [
             'listDataProvider' => $dataProvider,
         ]);
     }
@@ -120,8 +123,9 @@ class SiteController extends Controller
     public function actionJokeCategory($id){
         $model = new SiteJokeSearch();
         $dataProvider = $model->search(['SiteJokeSearch'=>['category_ids'=>[$id]]]);
-
-        return $this->render('category', [
+        
+        $this->view->title .= Category::findOne($id)->category;
+        return $this->render('all', [
             'listDataProvider' => $dataProvider,
             'id'=>$id,
         ]);
@@ -132,10 +136,20 @@ class SiteController extends Controller
     *function for listing jokes from categories
     **/
     public function actionCategory($id){
-        $query= Joke::findOne($id);
-
+        
+        $jokeModel= Joke::findOne($id);
+        $commentModel= new JokeCommentsSearch();
+        $dataProvider = $commentModel->search(['joke_id'=>$id]);
+        
+        // Saving comments
+         if ($commentModel->load(Yii::$app->request->post()) && $commentModel->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
+        
         return $this->render('joke', [
-            'query' => $query,
+            'jokeModel' => $jokeModel,
+            'commentModel' => $commentModel,
+            'dataProvider' => $dataProvider,
         ]);
 
     }
@@ -157,7 +171,9 @@ class SiteController extends Controller
      */
     
     public function actionSend(){
+        
         $model = new Joke();
+        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             Yii::$app->session->setFlash('jokeSent');
 
@@ -220,9 +236,13 @@ class SiteController extends Controller
         
         for($i=0;$i<count($sorted_ids);$i++) {
             if($sorted_ids[$i]<$id) {
+                $commentModel= new JokeCommentsSearch();
+        $dataProvider = $commentModel->search(['joke_id'=>$sorted_ids[$i]]);
                 $query= Joke::findOne($sorted_ids[$i]);
                 return $this->render('joke', [
-                    'query' => $query,
+                    'jokeModel' => $query,
+                    'commentModel' => $commentModel,
+                    'dataProvider'=>$dataProvider
                 ]);
             }  
         }  
@@ -259,9 +279,13 @@ class SiteController extends Controller
         
         for($i=0;$i<count($ids);$i++) {
             if($ids[$i]>$id) {
+                $commentModel= new JokeCommentsSearch();
+        $dataProvider = $commentModel->search(['joke_id'=>$ids[$i]]);
                 $query= Joke::findOne($ids[$i]);
                 return $this->render('joke', [
-                    'query' => $query,
+                    'jokeModel' => $query,
+                    'commentModel' => $commentModel,
+                    'dataProvider'=>$dataProvider
                 ]);
             }
         }
@@ -269,8 +293,6 @@ class SiteController extends Controller
         if(empty($query)) {
            return $this->redirect(Yii::$app->request->referrer); 
         }
-        
-     
     }
-    
+
 }
