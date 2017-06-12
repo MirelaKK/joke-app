@@ -5,8 +5,15 @@ use yii\widgets\ActiveForm;
 use kartik\rating\StarRating;
 /* @var $this yii\web\View */
 
+$category_name=$jokeModel->categories;
+
+ foreach ($category_name as $k=>$v){ 
+   $category=$v['category']; 
+   $category_id=$v['id'];
+}
+
 $this->title = $jokeModel->title;
-//$this->params['breadcrumbs'][] = ['label' => $category, 'url' => ['joke-category','id' => $category_id]];
+$this->params['breadcrumbs'][] = ['label' => $category, 'url' => ['joke-category','id' => $category_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>  
 
