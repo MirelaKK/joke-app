@@ -65,7 +65,21 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $joke_of_day = $this->renderPartial('_joke', ['model'=>Joke::getJokeOfDay()]);
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => Joke::getNewJokes(),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        
+        $new = $this->renderPartial('best', ['listDataProvider'=>$dataProvider]);
+        
+        return $this->render('index',[
+            'joke_of_day'=> $joke_of_day,
+            'new_jokes'=>$new,
+        ]);
     }
 
     /**
@@ -76,7 +90,7 @@ class SiteController extends Controller
     public function actionBest()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Joke::find()->orderBy(['joke_rating' => SORT_DESC]),
+            'query' => Joke::getBestJokes(),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -90,7 +104,7 @@ class SiteController extends Controller
      public function actionNew()
     {   
         $dataProvider = new ActiveDataProvider([
-            'query' => Joke::find()->orderBy(['publish_date' => SORT_DESC]),
+            'query' => Joke::getNewJokes(),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -155,4 +169,5 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    
 }
