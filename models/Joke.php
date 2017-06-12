@@ -148,4 +148,23 @@ class Joke extends \yii\db\ActiveRecord
 
         }
  
+    public static function getJokeOfDay(){
+        return Joke::find()
+                ->where(['joke_status_id'=>4])
+                ->andWhere(['not',['joke_of_day_date'=>null]])
+                ->orderBy(['publish_date' => SORT_DESC])
+                ->one();
+    }
+    
+    public static function getNewJokes(){
+        return Joke::find()
+                ->where(['joke_status_id'=>4])
+                ->orderBy(['publish_date' => SORT_DESC]);
+    }
+    
+    public static function getBestJokes(){
+        return Joke::find()
+                ->where(['joke_status_id'=>4])
+                ->orderBy(['joke_rating' => SORT_DESC]);
+    }
 }
