@@ -19,8 +19,11 @@ class MyAppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/jokes.css',
+        'assets/bootstrap-star-rating/css/star-rating.css'
     ];
     public $js = [
+        'assets/kartik-v/bootstrap-star-rating/js/star-rating.js',
+        'assets/4f1e346c/jquery.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
