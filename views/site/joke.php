@@ -20,22 +20,23 @@ $this->params['breadcrumbs'][] = $this->title;
 <h2><?= $jokeModel->title; ?></h2>
   <p><?= $jokeModel->joke; ?></p> 
   
-<div class="joke-rating-form">
+<div class="row">
  <?php $form = ActiveForm::begin(); ?>
 <?= $form->field($ratingModel, 'joke_rating')->widget(StarRating::classname(), [
+    'value' => $jokeModel->getJokeRating(),
     'pluginOptions' => ['size'=>'xs',
                          'stars' => 5, 
-                            'min' => 0,
+                            'min' => 1,
                             'max' => 5,
                             'step' => 1,
-                        'lang'=>'hr']
+                        ]
 ])->label(false)?>
-    <?= $form->field($commentModel, 'joke_id')->hiddenInput(['value'=> $jokeModel->id])->label(false);?>
+    <?= $form->field($ratingModel, 'joke_id')->hiddenInput(['value'=> $jokeModel->id])->label(false);?>
     
-    <?= $form->field($commentModel, 'ip')->hiddenInput(['value'=>  '1:1:1:2'])->label(false); ?>
-    <div class="form-group">
+    <?= $form->field($ratingModel, 'ip')->hiddenInput(['value'=>  $_SERVER['REMOTE_ADDR']])->label(false); ?>
+   <div class="form-group">
         <?= Html::submitButton('Rate', ['class' =>'btn btn-danger']) ?>
-</div>
+   </div>
     <?php ActiveForm::end();?>
 </div>
   <hr>

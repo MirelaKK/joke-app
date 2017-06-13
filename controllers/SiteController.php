@@ -7,7 +7,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\Joke;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\SiteJokeSearch;
 use app\models\SiteSearch;
