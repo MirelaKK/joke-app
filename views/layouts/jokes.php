@@ -34,6 +34,15 @@ $model = new SiteSearch();
           <div class="content-header">
         <h1>Vicevi</h1>
       </div>
+      <?= 
+   Breadcrumbs::widget([
+      'homeLink' => [ 
+                      'label' => Yii::t('yii', 'Naslovna'),
+                      'url' => Yii::$app->homeUrl,
+                 ],
+      'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+   ]) 
+  ?>
 
     <div class="content-box">
     <div class="body-content">
