@@ -47,7 +47,10 @@ class SiteSearch extends Joke
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' =>['defaultOrder'=>['submit_date'=>SORT_ASC]]
+            'sort' =>['defaultOrder'=>['submit_date'=>SORT_ASC]],
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
 
         $this->load($params);
