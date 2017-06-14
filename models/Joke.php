@@ -3,7 +3,8 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\JokeRating;
+use app\models\Category;
 /**
  * This is the model class for table "joke".
  *
@@ -58,11 +59,11 @@ class Joke extends \yii\db\ActiveRecord
             },'when' => function ($model) {
                 return $model->joke_status_id == 4;
             }],
-            ['submitter','default','value'=>function($model,$attributes){
-                $f_name = $this->admin->first_name;
-                $l_name = $this->admin->last_name;
-                 return $f_name." ".$l_name;
-            }],
+            //['submitter','default','value'=>function($model,$attributes){
+              //  $f_name = $this->admin->first_name;
+              //  $l_name = $this->admin->last_name;
+               //  return $f_name." ".$l_name;
+            //}],
             [['approval_date', 'joke_of_day_date','publish_date'], 'safe'],
             [['joke_rating'], 'number'],
             [['title', 'submitter'], 'string', 'max' => 50],
@@ -174,4 +175,56 @@ class Joke extends \yii\db\ActiveRecord
                 ->where(['joke_status_id'=>4])
                 ->orderBy(['joke_rating' => SORT_DESC]);
     }
+
+    public function getSortedIdsForLastJoke($id)
+    {   
+                
+        $search_model=Joke::findOne($id);
+        $category_name= $search_model->categories;
+        foreach ($category_name as $k=>$v){ 
+           $category=$v['category']; 
+           $category_id=$v['id'];
+        }
+
+        $jokes=Category::findOne($category_id)->jokes;
+
+        $ids=[];
+        
+        foreach ($jokes as $k=>$v){ 
+            if($v['joke_status_id']==4) {
+                $ids[]=$v['id'];
+            }
+        }
+
+        //$ids sorted desc but have to sort key values
+        //and than keep together those key and values
+        arsort($ids);
+        $keys = array_keys($ids);
+        sort($keys);
+        $sorted_ids = array_combine($keys, array_values($ids));
+        return $sorted_ids;
+        
+    }
+
+    public function getIdsForNextJoke($id)
+    {
+        $search_model=Joke::findOne($id);
+        $category_name= $search_model->categories;
+        foreach ($category_name as $k=>$v){ 
+           $category=$v['category']; 
+           $category_id=$v['id'];
+        }
+
+        $jokes=Category::findOne($category_id)->jokes;
+
+        $ids=[];
+
+        foreach ($jokes as $k=>$v){ 
+            if($v['joke_status_id']==4) {
+                $ids[]=$v['id'];
+            }
+        }
+        return $ids;
+    }
+
 }
