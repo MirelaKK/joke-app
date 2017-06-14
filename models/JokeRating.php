@@ -32,13 +32,13 @@ class JokeRating extends \yii\db\ActiveRecord
     {
         return [
             [['joke_id', 'ip', 'joke_rating'], 'required'],
-            ['date_of_rating', 'default','value'=>function($model,$attributes){
+            ['date_of_rating', 'default','value'=>function(){
                 return date('Y-m-d H:i:s');
             }],
             [['joke_id'], 'integer'],
             [['joke_rating'], 'number'],
             [['ip'], 'ip'],
-            [['ip'], 'unique', 'message'=> 'Ne možete dva puta glasati'],
+           // [['ip'], 'unique', 'message'=> 'Ne možete dva puta glasati'],
             [['joke_id'], 'exist', 'skipOnError' => true, 'targetClass' => Joke::className(), 'targetAttribute' => ['joke_id' => 'id']],
         ];
     }

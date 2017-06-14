@@ -149,6 +149,11 @@ class SiteController extends Controller
         if ($ratingModel->load(Yii::$app->request->post()) && $ratingModel->save()) {
                 return $this->redirect(['category', 'id' => $id]);
         }
+
+        //saving ratings
+        if ($jokeModel->load(Yii::$app->request->post()) && $jokeModel->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
         
         return $this->render('joke', [
             'jokeModel' => $jokeModel,
@@ -165,7 +170,7 @@ class SiteController extends Controller
         $searchModel = new SiteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('best', [
+        return $this->render('all', [
             'listDataProvider' => $dataProvider,
         ]);
     }
@@ -213,42 +218,34 @@ class SiteController extends Controller
      * 
      */
     public function actionLastJoke($id)
-    {   $ratingModel = new JokeRating();
-        
-        $search_model=Joke::findOne($id);
-        $category_name= $search_model->categories;
-        foreach ($category_name as $k=>$v){ 
-           $category=$v['category']; 
-           $category_id=$v['id'];
-        }
-
-        $jokes=Category::findOne($category_id)->jokes;
-
-        $ids=[];
-        
-        foreach ($jokes as $k=>$v){ 
-            if($v['joke_status_id']==4) {
-                $ids[]=$v['id'];
-            }
-        }
-
-        //$ids sorted desc but have to sort key values
-        //and than keep together those key and values
-        arsort($ids);
-        $keys = array_keys($ids);
-        sort($keys);
-        $sorted_ids = array_combine($keys, array_values($ids));
+    {   
+        $ratingModel = new JokeRating();
+        $sorted_ids = Joke::getSortedIdsForLastJoke($id);
         
         for($i=0;$i<count($sorted_ids);$i++) {
             if($sorted_ids[$i]<$id) {
                 $commentModel= new JokeCommentsSearch();
-        $dataProvider = $commentModel->search(['joke_id'=>$sorted_ids[$i]]);
+                $dataProvider = $commentModel->search(['joke_id'=>$sorted_ids[$i]]);
                 $query= Joke::findOne($sorted_ids[$i]);
+
+                // Saving comments
+         if ($commentModel->load(Yii::$app->request->post()) && $commentModel->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
+        //saving rating
+        if ($ratingModel->load(Yii::$app->request->post()) && $ratingModel->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
+
+        //saving ratings
+        if ($query->load(Yii::$app->request->post()) && $query->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
                 return $this->render('joke', [
                     'jokeModel' => $query,
                     'commentModel' => $commentModel,
                     'dataProvider'=>$dataProvider,
-            'ratingModel' =>$ratingModel
+                    'ratingModel' =>$ratingModel
                 ]);
             }  
         }  
@@ -266,29 +263,27 @@ class SiteController extends Controller
     public function actionNextJoke($id)
     {
         $ratingModel = new JokeRating();
-        
-        $search_model=Joke::findOne($id);
-        $category_name= $search_model->categories;
-        foreach ($category_name as $k=>$v){ 
-           $category=$v['category']; 
-           $category_id=$v['id'];
-        }
-
-        $jokes=Category::findOne($category_id)->jokes;
-
-        $ids=[];
-
-        foreach ($jokes as $k=>$v){ 
-            if($v['joke_status_id']==4) {
-                $ids[]=$v['id'];
-            }
-        }
+        $ids = Joke::getIdsForNextJoke($id);
         
         for($i=0;$i<count($ids);$i++) {
             if($ids[$i]>$id) {
                 $commentModel= new JokeCommentsSearch();
         $dataProvider = $commentModel->search(['joke_id'=>$ids[$i]]);
                 $query= Joke::findOne($ids[$i]);
+
+                // Saving comments
+         if ($commentModel->load(Yii::$app->request->post()) && $commentModel->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
+        //saving rating
+        if ($ratingModel->load(Yii::$app->request->post()) && $ratingModel->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
+
+        //saving ratings
+        if ($query->load(Yii::$app->request->post()) && $query->save()) {
+                return $this->redirect(['category', 'id' => $id]);
+        }
                 return $this->render('joke', [
                     'jokeModel' => $query,
                     'commentModel' => $commentModel,
