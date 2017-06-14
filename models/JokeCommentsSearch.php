@@ -47,6 +47,9 @@ class JokeCommentsSearch extends JokeComments
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
 
         if(sizeof($params)===1){

@@ -37,13 +37,22 @@ class JokeSearch extends JokeWithCategory
     public function search($params)
     
     {
+
         $query = JokeWithCategory::find()->where(['not', ['joke_status_id' => 5]]);
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' =>['defaultOrder'=>['joke_status_id'=>SORT_ASC,
-                                        'submit_date'=>SORT_ASC]]
+                                        'submit_date'=>SORT_ASC]],
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
+
+        $query->joinWith('admin');
+        $query->joinWith('status');
+        $query->joinWith('jokeCategories');
+
 
         $this->load($params);
 
