@@ -20,81 +20,78 @@ class DbController extends Controller
             'dsn' => 'mysql:host=localhost;dbname=stari_vicevi',
             'username' => 'root',
             'password' => '',
-            'charset' => 'latin2',// or UTF8
         ]);
 
         $db->open();
         
         $count = $db->createCommand('SELECT COUNT(*) FROM vicevi')
              ->queryScalar();
+        $rows = $db->createCommand('SELECT IDvic, IDkat, od, naslov, vic, datum_pred, datum, poena, glasova, odobren  FROM vicevi')->queryAll();
         
-        $vic= $db->createCommand('SELECT CONVERT(vic USING utf8) FROM vicevi')
-             ->queryColumn();
-
-       $naslov= $db->createCommand('SELECT naslov FROM vicevi')
-             ->queryColumn();
-       $od= $db->createCommand('SELECT od FROM vicevi')
-             ->queryColumn();
-       $IDvic= $db->createCommand('SELECT IDvic FROM vicevi')
-             ->queryColumn();
-       $IDkat= $db->createCommand('SELECT IDkat FROM vicevi')
-             ->queryColumn();
-       $datumpred= $db->createCommand('SELECT datum_pred FROM vicevi')
-             ->queryColumn();
-       $datum= $db->createCommand('SELECT datum FROM vicevi')
-             ->queryColumn();
-       $glasova= $db->createCommand('SELECT glasova FROM vicevi')
-             ->queryColumn();
-        $poena= $db->createCommand('SELECT poena FROM vicevi')
-             ->queryColumn();
-        $odobren= $db->createCommand('SELECT odobren FROM vicevi')
-             ->queryColumn();
-       $status = 1;
-       
        //ignoring keys
        Yii::$app->db->createCommand()->checkIntegrity(false)->execute();
        // looping through columns and writing them
-       for($i =0; $i <= 5; $i++){
+       for($i =0; $i <= $count; $i++){
+           
+        $vic= $rows[$i]['vic'];
+        $naslov= $rows[$i]['naslov'];
+        $od= $rows[$i]['od'];
+        $IDvic= $rows[$i]['IDvic'];
+        $IDkat= $rows[$i]['IDkat'];
+        $datumpred= $rows[$i]['datum_pred'];
+        $datum= $rows[$i]['datum'];
+        $glasova= $rows[$i]['glasova'];
+        $poena= $rows[$i]['poena'];
+        $odobren= $rows[$i]['odobren'];
+        $status = 1;
+       
            // setting joke_status
-                if($odobren[$i] == 0){
+                if($odobren == 0){
                     $status = 2;
-                }elseif($odobren[$i] == 1) {
+                }elseif($odobren == 1) {
                     $status =4;
                 }
        
-        
+        //insertin values
        Yii::$app->db->createCommand()->insert('joke',
-           ['id'=>$IDvic[$i],
-               'title'=>$this->strReplace($naslov[$i]),
-               'joke'=>$this->strReplace($vic[$i]),
-               'submitter'=>$this->strReplace($od[$i]),
-               'submit_date'=>$datumpred[$i],
-               'publish_date'=>$datum[$i],
-               'joke_rating'=> $poena[$i]/$glasova[$i],
+           ['id'=>$IDvic,
+               'title'      =>$this->strReplace($naslov),
+               'joke'       =>$this->strReplace($vic),
+               'submitter'  =>$this->strReplace($od),
+               'submit_date'=>$datumpred,
+               'publish_date'=>$datum,
+               'joke_rating'=> $poena/$glasova,
                'joke_status_id'=>$status,
            ])->execute();
        
        Yii::$app->db->createCommand()->insert('joke2category',
-           ['joke_id'=>$IDvic[$i],
-               'category_id'=>$IDkat[$i],
+           ['joke_id'=>$IDvic,
+               'category_id'=>$IDkat,
                
            ])->execute();
        }
-       //getting back the keys
+     
        Yii::$app->db->createCommand()->checkIntegrity(true)->execute();
+       $db->close();
     }
     public function strReplace($s) {
      
             $s=str_replace("Ã¦","ć",$s);
-            
+            $s=str_replace("Ä","Ć",$s);
             $s=str_replace("Ã¨","č",$s);
-            
+            $s=str_replace("ĂŚ","ć",$s);
+            $s=str_replace("Ă","Č",$s);
             $s=str_replace("Â®","Ž",$s);
             $s=str_replace("Â¹","š",$s);
             $s=str_replace("Â¾","ž",$s);
             $s=str_replace("Â©","Š",$s);
-            
+            $s=str_replace("ÂŠ","Š",$s);
             $s=str_replace("Ã°","đ",$s);
+            $s=str_replace("Ä","Đ",$s);
+            
+            $s=str_replace("Âš","š",$s);
+            $s=str_replace("Ă¨","č",$s);
+            $s=str_replace("ĂŚ","ć",$s);
             
             
             return $s;
@@ -106,7 +103,6 @@ class DbController extends Controller
             'dsn' => 'mysql:host=localhost;dbname=stari_vicevi',
             'username' => 'root',
             'password' => '',
-            'charset' => 'latin2',//or UTF8
         ]);
 
         $db->open();
@@ -118,12 +114,52 @@ class DbController extends Controller
         $IDvic= $db->createCommand('SELECT IDvic FROM vic_dana')
              ->queryColumn();
         
-        for($i =0; $i <= 5; $i++){
+        for($i =0; $i <= $count; $i++){
         Yii::$app->db->createCommand()->update('joke',
            ['joke_of_day_date'=>$datum[$i]],
                'id=:id')
                 ->bindParam(':id', $IDvic[$i])
                 ->execute();
         }
+        
+        $db->close();
+  }
+  
+  public function actionWriteComments(){
+      
+      $db = new \yii\db\Connection([
+            'dsn' => 'mysql:host=localhost;dbname=stari_vicevi',
+            'username' => 'root',
+            'password' => '',
+        ]);
+
+        $db->open();
+        
+        $count = $db->createCommand('SELECT COUNT(*) FROM komentari')
+             ->queryScalar();
+        $rows = $db->createCommand('SELECT IDvic, IDkomentar, od, komentar, vrijeme  FROM komentari')->queryAll();
+        
+       //ignoring keys
+       Yii::$app->db->createCommand()->checkIntegrity(false)->execute();
+       // looping through columns and writing them
+       for($i =0; $i <= $count; $i++){
+           
+        $id= $rows[$i]['IDkomentar'];
+        $IDvic= $rows[$i]['IDvic'];
+        $od= $rows[$i]['od'];
+        $komentar= $rows[$i]['komentar'];
+        $vrijeme= $rows[$i]['vrijeme'];
+    
+        //insertin values
+       Yii::$app->db->createCommand()->insert('joke_comments',
+           ['id'=>$id,
+               'joke_id'      =>$IDvic,
+               'submitter'    =>$this->strReplace($od),
+               'submit_date'=>$vrijeme,
+               'joke_comment'=>$this->strReplace($komentar),
+               'active'=>1,
+           ])->execute();
+  }
+  $db->close();
   }
 }

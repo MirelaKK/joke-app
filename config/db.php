@@ -5,5 +5,5 @@ return [
     'dsn' => 'mysql:host=localhost;dbname=joke',
     'username' => 'root',
     'password' => '',
-    'charset' => 'utf8',
+    'charset' => 'latin2',
 ];
