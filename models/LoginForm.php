@@ -27,6 +27,10 @@ class LoginForm extends Model
             [['username', 'password'], 'required','message'=>'Polje ne može biti prazno.'],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],
+            ['password', 'filter', 'filter' => function ($password) {
+                return Yii::$app->getSecurity()->generatePasswordHash($password); 
+            }],
+            
         ];
     }
 

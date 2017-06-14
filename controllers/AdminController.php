@@ -172,8 +172,13 @@ class AdminController extends Controller
         }*/
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+       // $hash = Yii::$app->getSecurity()->generatePasswordHash(Yii::$app->request->post('password'));
+        
+       
+        if ($model->load(Yii::$app->request->post()) && $model->login() && Yii::$app->getSecurity()->validatePassword($model->password, Yii::$app->getSecurity()->generatePasswordHash($model->password))) {
             return $this->redirect(['joke/index']);
+        } else {
+            // wrong password
         }
         return $this->render('login', [
             'model' => $model,

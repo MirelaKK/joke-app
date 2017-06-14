@@ -38,6 +38,9 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
             [['first_name', 'last_name'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],
             [['password'], 'string', 'max' => 10],
+             ['password', 'filter', 'filter' => function ($password) {
+                return Yii::$app->getSecurity()->generatePasswordHash($password); 
+            }],
         ];
     }
 
@@ -89,8 +92,8 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     }
     
     public function validatePassword($password){
-        return $this->password === $password;
-        //return Security::validatePassword($password, $this->password_hash);
+        return Yii::$app->getSecurity()->validatePassword($password, Yii::$app->getSecurity()->generatePasswordHash($password));
+      //  return Security::validatePassword($password, $this->password_hash);
     }
     public static function findIdentityByAccessToken($token, $type = NULL){
         throw new \yii\web\NotSupportedException;
