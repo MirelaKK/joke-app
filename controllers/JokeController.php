@@ -147,9 +147,8 @@ class JokeController extends Controller
     {
         // find last unapproved joke in db
         $lastUnapprovedJoke = Joke::find()->where(['joke_status_id'=>1])->orderBy(['id' => SORT_ASC])->one();
-       // checks if there actually are unapproved jokes and if there are
-        // checks if the active joke is the last one
-        if($this->hasUnapproved() && $lastUnapprovedJoke->id != $id){
+        // checks if the active joke is the last one unapproved
+        if(!empty($lastUnapprovedJoke) && $lastUnapprovedJoke->id != $id){
            // if not, redirecting to update action with next joke's id
             $model  = Yii::$app->db
                     ->createCommand('SELECT * FROM joke WHERE id < :id AND joke_status_id = :status_id ORDER BY id DESC')
@@ -165,7 +164,7 @@ class JokeController extends Controller
     {
         $nextUnapprovedJoke = Joke::find()->where(['joke_status_id'=>1])->orderBy(['id' => SORT_DESC])->one();
        
-        if($this->hasUnapproved() && $nextUnapprovedJoke->id != $id){
+        if(!empty($lastUnapprovedJoke) && $nextUnapprovedJoke->id != $id){
             
             $model  = Yii::$app->db
                     ->createCommand('SELECT * FROM joke WHERE id > :id AND joke_status_id = :status_id')
@@ -216,10 +215,5 @@ class JokeController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function hasUnapproved(){
-        
-        $status = Joke::find()->where(['joke_status_id'=>1])->all();
-        
-        return isset($status);
-    }
+
 }

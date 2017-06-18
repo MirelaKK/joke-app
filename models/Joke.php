@@ -86,7 +86,7 @@ class Joke extends \yii\db\ActiveRecord
             'submitter' => 'Poslao',
             'joke_status_id' => 'Status vica',
             'approval_date' => 'Datum odobrenja',
-            'publish_date' => 'Datum odbjavljivanja',
+            'publish_date' => 'Datum objavljivanja',
             'admin_id' => 'Admin',
             'joke_of_day_date' => 'Datum za vic dana',
             'joke_rating' => 'Rating',
